@@ -1,14 +1,8 @@
-﻿  j1Collisions.cpp
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  j1Window.cpp
-  j1Textures.cpp
-  j1Scene.cpp
-  j1Render.cpp
-  j1Map.cpp
-  j1Main.cpp
-  j1Input.cpp
-  j1Audio.cpp
-  j1App.cpp
+﻿cl : Command line warning D9028: minimal rebuild failure, reverting to normal build
+  j1Player.cpp
+c:\users\joan\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(22): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\joan\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(28): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\joan\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(34): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\joan\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(40): warning C4305: '=': truncation from 'double' to 'float'
   Motor2D.vcxproj -> C:\Users\Joan\Documents\GitHub\Assigment-1--2D-Platformer\Dev_class5_handout\Debug\Motor 2D.exe
   Motor2D.vcxproj -> C:\Users\Joan\Documents\GitHub\Assigment-1--2D-Platformer\Dev_class5_handout\Debug\Motor 2D.pdb (Full PDB)

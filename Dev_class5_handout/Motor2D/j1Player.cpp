@@ -12,24 +12,33 @@ j1Player::j1Player()
 	position.x = 100;
 	position.y = 220;
 
+	sprite_distance.x = 548;
+	sprite_distance.y = 482;
+
 	// idle animation
-	idle.PushBack({ 0, 0, 450, 480 });
-	idle.PushBack({ 570, 0, 450, 480 });
-	idle.speed = 0.2f;
+	for (int i = 0; i < 10; i++)
+		idle.PushBack({ 1 + sprite_distance.x * i, 1 + sprite_distance.y, 547, 481 });
+
+	idle.speed = 0.1;
 
 	// running forward
-	forward.PushBack({ 78, 131, 60, 88 });
-	forward.PushBack({ 162, 128, 64, 92 });
-	forward.speed = 0.1f;
+	for (int i = 0; i < 8; i++)
+		forward.PushBack({ 1 + sprite_distance.x * i, 1 + sprite_distance.y * 2, 547, 481 });
+
+	forward.speed = 0.1;
 
 	// running backwards
-	backwards.PushBack({ 78, 131, 60, 88 });
-	backwards.PushBack({ 162, 128, 64, 92 });
-	backwards.speed = 0.1f;
+	for (int i = 0; i < 8; i++)
+		backwards.PushBack({ 1 + sprite_distance.x * i, 1 + sprite_distance.y * 2, 547, 481 });
+
+	backwards.speed = 0.1;
 
 	// jumping
-	jump.PushBack({});
-	jump.PushBack({});
+	for (int i = 0; i < 8; i++)
+		jump.PushBack({ 1 + sprite_distance.x * i, 1 + sprite_distance.y * 4, 547, 481 });
+
+	jump.speed = 0.1;
+	jump.loop = false;
 }
 
 j1Player::~j1Player()
@@ -40,7 +49,7 @@ bool j1Player::Start()
 {
 	LOG("Loading player textures");
 	bool ret = true;
-	graphics = App->tex->Load("maps/SpriteSheet.png");
+	graphics = App->tex->Load("textures/SpriteSheet.png");
 	return ret;
 }
 
@@ -63,10 +72,35 @@ bool j1Player::PostUpdate()
 		position.x -= speed;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	{
+		current_animation = &jump;
+	}
+
 	// Draw everything --------------------------------------
 	SDL_Rect r = current_animation->GetCurrentFrame();
 
+	if (!collider_added)
+	{
+		collider = App->collision->AddCollider(r, COLLIDER_PLAYER);
+		collider_added = true;
+	}
+
 	App->render->Blit(graphics, position.x, position.y - r.h, &r);
+
+	if (collider != nullptr)
+	{
+		collider->SetPos(position.x, position.y - r.h);
+		collider->SetSize(r.w, r.h);
+	}
 
 	return true;
 }
+
+/*void j1Player::PrepareAnimation(Animation animation, int sprites, int sprite_distance_x, int sprite_distance_y, int row, int margin = 0, float speed = 0.1)
+{
+	for (int i = 0; i < sprites; i++)
+		animation.PushBack({ margin + sprite_distance_x * i, margin + sprite_distance_y, 547, 481 });
+
+	animation.speed = speed;
+}*/

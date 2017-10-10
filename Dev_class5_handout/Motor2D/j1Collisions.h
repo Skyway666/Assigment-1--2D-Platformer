@@ -22,15 +22,11 @@ struct Collider
 {
 	SDL_Rect rect;
 	bool to_delete = false;
-	int bullettype = 0;
-	int damage = 0;
 	COLLIDER_TYPE type;
 
 	Collider(SDL_Rect rectangle, COLLIDER_TYPE type) :
 		rect(rectangle),
-		type(type),
-		bullettype(bullettype),
-		damage(damage)
+		type(type)
 	{}
 
 	void SetPos(int x, int y)
