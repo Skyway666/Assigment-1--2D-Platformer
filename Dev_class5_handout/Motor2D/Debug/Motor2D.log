@@ -1,5 +1,14 @@
-﻿  j1Player.cpp
-  j1App.cpp
+﻿  j1Collisions.cpp
   Generating Code...
+  Skipping... (no relevant changes detected)
+  j1Window.cpp
+  j1Textures.cpp
+  j1Scene.cpp
+  j1Render.cpp
+  j1Map.cpp
+  j1Main.cpp
+  j1Input.cpp
+  j1Audio.cpp
+  j1App.cpp
   Motor2D.vcxproj -> C:\Users\Joan\Documents\GitHub\Assigment-1--2D-Platformer\Dev_class5_handout\Debug\Motor 2D.exe
   Motor2D.vcxproj -> C:\Users\Joan\Documents\GitHub\Assigment-1--2D-Platformer\Dev_class5_handout\Debug\Motor 2D.pdb (Full PDB)

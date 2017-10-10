@@ -34,7 +34,7 @@ bool j1Collisions::PreUpdate()
 }
 
 // Called before render is available
-bool j1Collisions::Update()
+bool j1Collisions::PostUpdate()
 {
 	Collider* c1;
 	Collider* c2;

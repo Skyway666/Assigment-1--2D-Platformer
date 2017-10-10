@@ -14,7 +14,7 @@ public:
 	~j1Player();
 
 	bool Start();
-	bool Update();
+	bool PostUpdate();
 
 public:
 
@@ -22,6 +22,7 @@ public:
 	Animation idle;
 	Animation forward;
 	Animation backwards;
+	Animation jump;
 	iPoint position;
 
 };

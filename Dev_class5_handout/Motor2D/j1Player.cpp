@@ -13,28 +13,23 @@ j1Player::j1Player()
 	position.y = 220;
 
 	// idle animation
-	idle.PushBack({ 7, 14, 60, 90 });
-	idle.PushBack({ 95, 15, 60, 89 });
-	idle.PushBack({ 184, 14, 60, 90 });
-	idle.PushBack({ 276, 11, 60, 93 });
-	idle.PushBack({ 366, 12, 60, 92 });
+	idle.PushBack({ 0, 0, 450, 480 });
+	idle.PushBack({ 570, 0, 450, 480 });
 	idle.speed = 0.2f;
 
 	// running forward
 	forward.PushBack({ 78, 131, 60, 88 });
 	forward.PushBack({ 162, 128, 64, 92 });
-	forward.PushBack({ 259, 128, 63, 90 });
-	forward.PushBack({ 352, 128, 54, 91 });
-	forward.PushBack({ 432, 131, 50, 89 });
 	forward.speed = 0.1f;
 
 	// running backwards
 	backwards.PushBack({ 78, 131, 60, 88 });
 	backwards.PushBack({ 162, 128, 64, 92 });
-	backwards.PushBack({ 259, 128, 63, 90 });
-	backwards.PushBack({ 352, 128, 54, 91 });
-	backwards.PushBack({ 432, 131, 50, 89 });
 	backwards.speed = 0.1f;
+
+	// jumping
+	jump.PushBack({});
+	jump.PushBack({});
 }
 
 j1Player::~j1Player()
@@ -45,12 +40,12 @@ bool j1Player::Start()
 {
 	LOG("Loading player textures");
 	bool ret = true;
-	graphics = App->tex->Load("SpriteSheet.png");
+	graphics = App->tex->Load("maps/SpriteSheet.png");
 	return ret;
 }
 
 // Update: draw background
-bool j1Player::Update()
+bool j1Player::PostUpdate()
 {
 	Animation* current_animation = &idle;
 
