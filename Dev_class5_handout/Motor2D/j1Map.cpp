@@ -33,13 +33,14 @@ void j1Map::Draw()
 
 	// TODO 5: Prepare the loop to draw all tilesets + Blit
 	int counter = 0;
-	if (data.layer_array.At(0) != nullptr)
+	int layer_counter = 0;
+	while (data.layer_array.At(layer_counter) != nullptr)
 	{ 
-		while (counter < data.layer_array.At(0)->data->height*data.layer_array.At(0)->data->width)
+		while (counter < data.layer_array.At(layer_counter)->data->height*data.layer_array.At(layer_counter)->data->width)
 		{
-			int id = data.layer_array.At(0)->data->data[counter]; //devuelve el tipo de tileset
+			int id = data.layer_array.At(layer_counter)->data->data[counter]; //devuelve el tipo de tileset
 			int x = counter; 
-			int y = data.layer_array.At(0)->data->width;
+			int y = data.layer_array.At(layer_counter)->data->width;
 			Get(&x, &y); 
 
 			//Now, x and y are the coordinates of the tileset
@@ -52,6 +53,8 @@ void j1Map::Draw()
 			App->render->Blit(data.tilesets.At(0)->data->texture, x, y, &Tile_Rect(id));
 		    counter++;
 		}
+		layer_counter++;
+		counter = 0;
 		// TODO 9: Complete the draw function
 	}
 }
