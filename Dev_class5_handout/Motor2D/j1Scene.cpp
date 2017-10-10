@@ -32,7 +32,7 @@ bool j1Scene::Start()
 {	
 	//App->map->Load("hello.tmx");
 	App->map->Load("hello2.tmx");
-
+	App->map->map = 1;
 
 	return true;
 }
@@ -69,15 +69,24 @@ bool j1Scene::Update(float dt)
 		if(App->map->map == 0)
 		{ 
 			App->map->CleanUp();
-			App->map->Load("hello.tmx");
+			App->map->Load("hello2.tmx");
 			App->map->map = 1;
 		}
 
 		else if (App->map->map == 1)
 		{
 		    App->map->CleanUp();
-			App->map->Load("hello2.tmx");
+			App->map->Load("hello.tmx");
+			App->map->map = 2;
+		}
+		else if (App->map->map == 2)
+		{
+			App->map->CleanUp();
+			App->map->Load("Test-map-1.tmx");
 			App->map->map = 0;
+
+			App->render->camera.x = 100;
+			App->render->camera.y = 400;
 		}
 	}
 	

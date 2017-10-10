@@ -98,7 +98,11 @@ public:
 
 	void convert_to_real_world(int*, int*);
 
-	int map = 0;
+
+    //VARIABLE TO INCLUDE IN XML JAJAJAJAJAJAJAJAJAJ
+	int map = 1; 
+
+
 
 private:
 
