@@ -64,6 +64,24 @@ bool j1Scene::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x += 1;
 
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+	{ 
+		if(App->map->map == 0)
+		{ 
+			App->map->CleanUp();
+			App->map->Load("hello.tmx");
+			App->map->map = 1;
+		}
+
+		else if (App->map->map == 1)
+		{
+		    App->map->CleanUp();
+			App->map->Load("hello2.tmx");
+			App->map->map = 0;
+		}
+	}
+	
+
 	//App->render->Blit(img, 0, 0);
 	App->map->Draw();
 

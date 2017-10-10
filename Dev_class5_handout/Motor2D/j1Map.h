@@ -98,6 +98,8 @@ public:
 
 	void convert_to_real_world(int*, int*);
 
+	int map = 0;
+
 private:
 
 	bool LoadMap();
