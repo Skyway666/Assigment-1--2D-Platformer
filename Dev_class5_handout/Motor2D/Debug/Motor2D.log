@@ -1,5 +1,4 @@
-﻿cl : Command line warning D9028: minimal rebuild failure, reverting to normal build
-  j1Player.cpp
+﻿  j1Player.cpp
 c:\users\joan\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(22): warning C4305: '=': truncation from 'double' to 'float'
 c:\users\joan\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(28): warning C4305: '=': truncation from 'double' to 'float'
 c:\users\joan\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(34): warning C4305: '=': truncation from 'double' to 'float'

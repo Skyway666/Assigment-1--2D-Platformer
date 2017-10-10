@@ -23,6 +23,7 @@ public:
 public:
 
 	Collider* collider;
+	Collider* colliderground;
 	bool collider_added = false;
 
 public:

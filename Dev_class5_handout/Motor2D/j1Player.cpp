@@ -75,14 +75,21 @@ bool j1Player::PostUpdate()
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		current_animation = &jump;
+		position.y -= speed * 2;
+	}
+
+	if (collider != nullptr && colliderground != nullptr && !collider->CheckCollision(colliderground->rect))
+	{
+		position.y += 1;
 	}
 
 	// Draw everything --------------------------------------
 	SDL_Rect r = current_animation->GetCurrentFrame();
-
+	SDL_Rect ground{r.x, r.y + 200, r.w * 20, r.y / 2};
 	if (!collider_added)
 	{
 		collider = App->collision->AddCollider(r, COLLIDER_PLAYER);
+		colliderground = App->collision->AddCollider(ground, COLLIDER_WALL);
 		collider_added = true;
 	}
 
