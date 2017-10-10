@@ -71,6 +71,9 @@ bool j1App::Awake()
 		
 	config = LoadConfig(config_file);
 
+	save_game = "save_game";
+	load_game = "save_game";
+
 	if(config.empty() == false)
 	{
 		// self-config
