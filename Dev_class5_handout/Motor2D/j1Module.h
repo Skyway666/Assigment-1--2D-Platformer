@@ -8,7 +8,9 @@
 
 #include "p2SString.h"
 #include "PugiXml\src\pugixml.hpp"
+#include "j1Collisions.h"
 
+struct Collider;
 class j1App;
 
 class j1Module
@@ -74,6 +76,9 @@ public:
 	p2SString	name;
 	bool		active;
 
+public:
+
+	virtual void OnCollision(Collider*, Collider*) {}
 };
 
 #endif // __j1MODULE_H__
