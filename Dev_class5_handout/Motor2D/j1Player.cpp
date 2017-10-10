@@ -18,26 +18,26 @@ j1Player::j1Player()
 	// idle animation
 	for (int i = 0; i < 10; i++)
 		idle.PushBack({ 1 + sprite_distance.x * i, 1 + sprite_distance.y, 547, 481 });
-
-	idle.speed = 0.1;
+		//PrepareAnimation(idle, 10, sprite_distance.x, sprite_distance.y, 1, 1);
 
 	// running forward
 	for (int i = 0; i < 8; i++)
 		forward.PushBack({ 1 + sprite_distance.x * i, 1 + sprite_distance.y * 2, 547, 481 });
 
-	forward.speed = 0.1;
+	forward.speed = 0.03;
 
 	// running backwards
 	for (int i = 0; i < 8; i++)
 		backwards.PushBack({ 1 + sprite_distance.x * i, 1 + sprite_distance.y * 2, 547, 481 });
 
-	backwards.speed = 0.1;
+	backwards.speed = 0.03;
 
 	// jumping
 	for (int i = 0; i < 8; i++)
 		jump.PushBack({ 1 + sprite_distance.x * i, 1 + sprite_distance.y * 4, 547, 481 });
+	for (int i = 8; i < 7; i++)
+		jump.PushBack({ 1 + sprite_distance.x * i, 1 + sprite_distance.y * 5, 547, 481 });
 
-	jump.speed = 0.1;
 	jump.loop = false;
 }
 
@@ -72,16 +72,39 @@ bool j1Player::PostUpdate()
 		position.x -= speed;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 	{
-		current_animation = &jump;
-		position.y -= speed * 2;
+		if (collider != nullptr && colliderground != nullptr && collider->CheckCollision(colliderground->rect))
+			jumping = true;
 	}
 
-	if (collider != nullptr && colliderground != nullptr && !collider->CheckCollision(colliderground->rect))
+	if (jumping && allowtime)
 	{
-		position.y += 1;
+		time = SDL_GetTicks();
+		allowtime = false;
 	}
+
+	if (jumping && SDL_GetTicks() - time <= 500)
+	{
+		current_animation = &jump;
+		position.y -= 2;
+	}
+	else
+	{
+		jumping = false;
+		allowtime = true;
+		jump.Reset();
+	}
+
+	/*if (collider != nullptr && colliderground != nullptr && collider->CheckCollision(colliderground->rect))
+	{
+		jumping = false;
+		allowtime = true;
+		jump.Reset();
+	}*/
+
+	if (collider != nullptr && colliderground != nullptr && !collider->CheckCollision(colliderground->rect))
+		position.y += 1;
 
 	// Draw everything --------------------------------------
 	SDL_Rect r = current_animation->GetCurrentFrame();
@@ -104,10 +127,10 @@ bool j1Player::PostUpdate()
 	return true;
 }
 
-/*void j1Player::PrepareAnimation(Animation animation, int sprites, int sprite_distance_x, int sprite_distance_y, int row, int margin = 0, float speed = 0.1)
+void j1Player::PrepareAnimation(Animation animation, int sprites, int sprite_distance_x, int sprite_distance_y, int row, int margin, float speed)
 {
 	for (int i = 0; i < sprites; i++)
-		animation.PushBack({ margin + sprite_distance_x * i, margin + sprite_distance_y, 547, 481 });
+		animation.PushBack({ margin + sprite_distance_x * i, margin + sprite_distance_y * row, 547, 481 });
 
 	animation.speed = speed;
-}*/
+}

@@ -8,8 +8,7 @@ class Animation
 {
 public:
 	bool loop = true;
-	bool pingpong = false;
-	float speed = 0.1f;
+	float speed = 0.06f;
 	SDL_Rect frames[MAX_FRAMES];
 	int name;
 
@@ -17,11 +16,6 @@ private:
 	float current_frame = 0.0f;
 	int last_frame = 0;
 	int loops = 0;
-	enum pingpong
-	{
-		forward,
-		backward
-	} direction = forward;
 
 public:
 
@@ -41,31 +35,12 @@ public:
 
 	SDL_Rect& GetCurrentFrame()
 	{
-		switch (direction)
-		{
-		case pingpong::forward:
-		{
 			current_frame += speed;
 			if (current_frame >= last_frame)
 			{
-				current_frame = (loop || pingpong) ? 0.0f : last_frame - 1;
-				direction = pingpong ? pingpong::backward : pingpong::forward;
+				current_frame = (loop) ? 0.0f : last_frame - 1;
 				loops++;
 			}
-		}
-		break;
-		case pingpong::backward:
-		{
-			current_frame -= speed;
-			if (current_frame <= 0.0f)
-			{
-				current_frame = 0.0f;
-				direction = pingpong::forward;
-				loops++;
-			}
-		}
-		break;
-		}
 
 		return frames[(int)current_frame];
 	}
