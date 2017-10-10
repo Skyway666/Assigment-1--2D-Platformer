@@ -59,12 +59,12 @@ bool j1Collisions::Update()
 			if (c1->CheckCollision(c2->rect) == true)
 			{
 
-				if (matrix[c1->type][c2->type] && c1->callback)
-					c1->callback->OnCollision(c1, c2);
+				if (matrix[c1->type][c2->type])
+					c1->OnCollision(c1, c2);
 
 
-				if (matrix[c2->type][c1->type] && c2->callback)
-					c2->callback->OnCollision(c2, c1);
+				if (matrix[c2->type][c1->type])
+					c2->OnCollision(c2, c1);
 
 			}
 		}
@@ -77,7 +77,7 @@ bool j1Collisions::Update()
 
 void j1Collisions::DebugDraw()
 {
-	if (App->input->GetKey[SDL_SCANCODE_F1] == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
 
 	if (debug == false)
@@ -121,7 +121,7 @@ bool j1Collisions::CleanUp()
 	return true;
 }
 
-Collider* j1Collisions::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback, int bullettype, int damage)
+Collider* j1Collisions::AddCollider(SDL_Rect rect, COLLIDER_TYPE type)
 {
 	Collider* ret = nullptr;
 
@@ -129,7 +129,7 @@ Collider* j1Collisions::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module*
 	{
 		if (colliders[i] == nullptr)
 		{
-			ret = colliders[i] = new Collider(rect, type, callback, bullettype, damage);
+			ret = colliders[i] = new Collider(rect, type);
 			break;
 		}
 	}
@@ -141,7 +141,7 @@ void j1Collisions::Erase_Non_Player_Colliders()
 {
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
-		if (colliders[i] != nullptr && colliders[i]->type != COLLIDER_GOD && colliders[i]->type != COLLIDER_PLAYER)
+		if (colliders[i] != nullptr && colliders[i]->type != COLLIDER_PLAYER)
 		{
 			delete colliders[i];
 			colliders[i] = nullptr;

@@ -25,12 +25,10 @@ struct Collider
 	int bullettype = 0;
 	int damage = 0;
 	COLLIDER_TYPE type;
-	j1Module* callback = nullptr;
 
-	Collider(SDL_Rect rectangle, COLLIDER_TYPE type, j1Module* callback = nullptr, int bullettype = 0, int damage = 0) :
+	Collider(SDL_Rect rectangle, COLLIDER_TYPE type) :
 		rect(rectangle),
 		type(type),
-		callback(callback),
 		bullettype(bullettype),
 		damage(damage)
 	{}
@@ -48,6 +46,7 @@ struct Collider
 	}
 
 	bool CheckCollision(const SDL_Rect& r) const;
+	void OnCollision(Collider*, Collider*) {}
 };
 
 class j1Collisions : public j1Module
@@ -59,11 +58,10 @@ public:
 
 	bool PreUpdate();
 	bool Update();
-	//update_status PostUpdate();
 	bool CleanUp();
 	void Erase_Non_Player_Colliders();
 
-	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback = nullptr, int bullettype = 0, int damage = 0);
+	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type);
 
 	void DebugDraw();
 
