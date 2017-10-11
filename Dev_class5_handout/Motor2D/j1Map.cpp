@@ -47,11 +47,11 @@ void j1Map::CreateColliders()
 			convert_to_real_world(&x, &y);
 
 			//Now they are in pixels
-			    if(id == 11 || id == 12)
-				{ 
+			if(id == 11 || id == 12)
+			{ 
 				App->collision->AddCollider({ x,y,data.tilesets.At(0)->data->tile_width, data.tilesets.At(0)->data->tile_height }, COLLIDER_WALL);
-				}
-				counter++;
+			}
+			counter++;
 		}
 }
 

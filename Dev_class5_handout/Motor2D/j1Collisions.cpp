@@ -95,10 +95,10 @@ void j1Collisions::DebugDraw()
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha, false);
 			break;
 		case COLLIDER_WALL: // blue
-			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha, false);
+			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha, true);
 			break;
 		case COLLIDER_PLAYER: // green
-			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha, false);
+			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha, true);
 			break;
 		}
 	}
