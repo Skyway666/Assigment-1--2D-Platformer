@@ -31,8 +31,12 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {	
 	//App->map->Load("hello.tmx");
-	App->map->Load("hello2.tmx");
-	App->map->map = 1;
+	App->map->Load("Test-map-1.tmx");
+	App->map->CreateColliders();
+	App->map->map = 0;
+
+	App->render->camera.x = 200; //SHOULD BE USING "camera_starting_values"
+	App->render->camera.y = 400;
 
 	return true;
 }
@@ -86,8 +90,6 @@ bool j1Scene::Update(float dt)
 			App->map->Load("Test-map-1.tmx");
 			App->map->map = 0;
 
-			App->render->camera.x = 100;
-			App->render->camera.y = 400;
 		}
 	}
 	

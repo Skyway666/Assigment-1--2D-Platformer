@@ -64,6 +64,7 @@ struct MapData
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*> layer_array;
+	fPoint camera_starting_values; //NEW VARIABLE, ADD IT TO XML
 	// TODO 2: Add a list/array of layers to the map!
 };
 
@@ -86,6 +87,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	//Called to create colliders
+	void CreateColliders();
+
 	// Load new map
 	bool Load(const char* path);
 
@@ -99,8 +103,8 @@ public:
 	void convert_to_real_world(int*, int*);
 
 
-    //VARIABLE TO INCLUDE IN XML JAJAJAJAJAJAJAJAJAJ
-	int map = 1; 
+  
+	int map = 1; //NEW VARIABLE, ADD IT TO XML
 
 
 

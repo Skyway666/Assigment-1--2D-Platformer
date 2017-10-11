@@ -9,8 +9,8 @@
 
 j1Player::j1Player()
 {
-	position.x = 100;
-	position.y = 220;
+	position.x = 0;
+	position.y = -200;
 	int row = 0;
 
 	sprite_distance.x = 548;
@@ -66,6 +66,23 @@ bool j1Player::Start()
 	LOG("Loading player textures");
 	bool ret = true;
 	graphics = App->tex->Load("textures/SpriteSheet.png");
+
+	SDL_Rect r;
+	r.w = 481;
+	r.h = 547;
+	r.x = 0;
+	r.y = 0;
+
+	SDL_Rect ground{ r.x, r.y + 100, r.w * 20, r.y / 2 };
+
+	SDL_Rect collider_rect;
+	collider_rect.x = 0;
+	collider_rect.y = 0;
+	collider_rect.w = r.w* 0.2;
+	collider_rect.h = r.h * 0.2;
+
+	collider = App->collision->AddCollider(collider_rect, COLLIDER_PLAYER);
+	colliderground = App->collision->AddCollider(ground, COLLIDER_WALL);
 	return ret;
 }
 
@@ -111,21 +128,12 @@ bool j1Player::PostUpdate()
 		position.y += 1;
 
 	// Draw everything --------------------------------------
-	SDL_Rect r = current_animation->GetCurrentFrame();
-	SDL_Rect ground{r.x, r.y + 200, r.w * 20, r.y / 2};
-	if (!collider_added)
-	{
-		collider = App->collision->AddCollider(r, COLLIDER_PLAYER);
-		colliderground = App->collision->AddCollider(ground, COLLIDER_WALL);
-		collider_added = true;
-	}
 
-		App->render->Blit(graphics, position.x, position.y - r.h, &r, flip);
+	App->render->Blit(graphics, position.x, position.y,0.3, &current_animation->GetCurrentFrame(), flip);
 
 	if (collider != nullptr)
 	{
-		collider->SetPos(position.x, position.y - r.h);
-		collider->SetSize(r.w, r.h);
+		collider->SetPos(position.x + 30, position.y+30);
 	}
 
 	return true;

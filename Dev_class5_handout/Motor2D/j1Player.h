@@ -25,12 +25,9 @@ public:
 	Collider* collider;
 	Collider* colliderground;
 	Collider* colliderground2;
-	bool collider_added = false;
 	bool allowtime = true;
 	Uint32 time = 0;
 	bool jumping = false;
-	bool jumping2 = false;
-	bool jumping3 = false;
 	bool flip = false;
 
 public:
