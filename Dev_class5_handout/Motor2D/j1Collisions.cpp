@@ -164,9 +164,22 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 	}
 }
 
-bool Collider::WillCollide(const SDL_Rect& r, int speed_x, int speed_y) const
+bool Collider::WillCollideX(const SDL_Rect& r, int speed_x) const
 {
-	if (r.y + r.h > rect.y - speed_y && r.y < rect.y + rect.h + speed_y && r.x + r.w > rect.x - speed_x && r.x < rect.x + rect.w)
+	if (r.y + r.h > rect.y && r.y < rect.y + rect.h && r.x + r.w > rect.x + speed_x && r.x < rect.x + rect.w + speed_x)
+	{
+		return true;
+	}
+
+	else
+	{
+		return false;
+	}
+}
+
+bool Collider::WillCollideY(const SDL_Rect& r, int speed_y) const
+{
+	if (r.y + r.h > rect.y - speed_y && r.y < rect.y + rect.h + speed_y && r.x + r.w > rect.x && r.x < rect.x + rect.w)
 	{
 		return true;
 	}

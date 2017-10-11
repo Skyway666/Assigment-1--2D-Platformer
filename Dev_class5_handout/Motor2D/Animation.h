@@ -8,7 +8,7 @@ class Animation
 {
 public:
 	bool loop = true;
-	float speed = 0.06f;
+	float speed = 0.03f;
 	SDL_Rect frames[MAX_FRAMES];
 	int name;
 

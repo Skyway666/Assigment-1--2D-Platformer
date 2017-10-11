@@ -17,6 +17,8 @@ public:
 
 	bool Start();
 	bool PostUpdate();
+	
+	void Jump();
 
 public:
 
@@ -27,16 +29,20 @@ public:
 	bool allowtime = true;
 	Uint32 time = 0;
 	bool jumping = false;
+	bool jumping2 = false;
+	bool jumping3 = false;
 	bool flip = false;
 
 public:
 
 	SDL_Texture* graphics = nullptr;
+	Animation* current_animation;
 	Animation idle;
-	Animation forward;
-	Animation backwards;
+	Animation run;
 	Animation jump;
+	Animation fall;
 	Animation death;
+	Animation slide;
 	iPoint position;
 	iPoint sprite_distance;
 
