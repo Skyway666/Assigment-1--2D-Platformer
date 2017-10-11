@@ -18,7 +18,6 @@ j1Player::j1Player()
 	// idle animation
 	for (int i = 0; i < 10; i++)
 		idle.PushBack({ 1 + sprite_distance.x * i, 1 + sprite_distance.y, 547, 481 });
-		//PrepareAnimation(idle, 10, sprite_distance.x, sprite_distance.y, 1, 1);
 
 	// running forward
 	for (int i = 0; i < 8; i++)
@@ -35,10 +34,10 @@ j1Player::j1Player()
 	// jumping
 	for (int i = 0; i < 8; i++)
 		jump.PushBack({ 1 + sprite_distance.x * i, 1 + sprite_distance.y * 4, 547, 481 });
-	for (int i = 8; i < 7; i++)
-		jump.PushBack({ 1 + sprite_distance.x * i, 1 + sprite_distance.y * 5, 547, 481 });
+
 
 	jump.loop = false;
+	jump.speed = 0.03;
 }
 
 j1Player::~j1Player()
@@ -64,12 +63,14 @@ bool j1Player::PostUpdate()
 	{
 		current_animation = &forward;
 		position.x += speed;
+		flip = false;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		current_animation = &backwards;
 		position.x -= speed;
+		flip = true;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
@@ -116,7 +117,7 @@ bool j1Player::PostUpdate()
 		collider_added = true;
 	}
 
-	App->render->Blit(graphics, position.x, position.y - r.h, &r);
+		App->render->Blit(graphics, position.x, position.y - r.h, &r, flip);
 
 	if (collider != nullptr)
 	{
@@ -125,12 +126,4 @@ bool j1Player::PostUpdate()
 	}
 
 	return true;
-}
-
-void j1Player::PrepareAnimation(Animation animation, int sprites, int sprite_distance_x, int sprite_distance_y, int row, int margin, float speed)
-{
-	for (int i = 0; i < sprites; i++)
-		animation.PushBack({ margin + sprite_distance_x * i, margin + sprite_distance_y * row, 547, 481 });
-
-	animation.speed = speed;
 }

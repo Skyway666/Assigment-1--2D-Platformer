@@ -18,8 +18,6 @@ public:
 	bool Start();
 	bool PostUpdate();
 
-	void PrepareAnimation(Animation animation, int sprites, int sprite_distance_x, int sprite_distance_y, int row, int margin = 0, float speed = 0.1);
-
 public:
 
 	Collider* collider;
@@ -29,6 +27,7 @@ public:
 	bool allowtime = true;
 	Uint32 time = 0;
 	bool jumping = false;
+	bool flip = false;
 
 public:
 
