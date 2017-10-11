@@ -1,5 +1,5 @@
 ﻿  j1Player.cpp
-c:\users\joan\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(27): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\joan\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(33): warning C4305: '=': truncation from 'double' to 'float'
-  Motor2D.vcxproj -> C:\Users\Joan\Documents\GitHub\Assigment-1--2D-Platformer\Dev_class5_handout\Debug\Motor 2D.exe
-  Motor2D.vcxproj -> C:\Users\Joan\Documents\GitHub\Assigment-1--2D-Platformer\Dev_class5_handout\Debug\Motor 2D.pdb (Full PDB)
+c:\users\genisbs\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(27): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\genisbs\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(33): warning C4305: '=': truncation from 'double' to 'float'
+  Motor2D.vcxproj -> C:\Users\genisbs\Documents\GitHub\Assigment-1--2D-Platformer\Dev_class5_handout\Debug\Motor 2D.exe
+  Motor2D.vcxproj -> C:\Users\genisbs\Documents\GitHub\Assigment-1--2D-Platformer\Dev_class5_handout\Debug\Motor 2D.pdb (Full PDB)
