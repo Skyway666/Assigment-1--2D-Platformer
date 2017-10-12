@@ -60,6 +60,11 @@ void j1Map::Draw()
 	if (map_loaded == false)
 		return;
 
+
+	//Blit background
+     App->render->Blit(data.background_image, data.background_offset.x, -data.background_offset.y);
+
+
 	// TODO 5: Prepare the loop to draw all tilesets + Blit
 	int counter = 0;
 		while (counter < data.layer_array.At(0)->data->height*data.layer_array.At(0)->data->width)
@@ -80,6 +85,9 @@ void j1Map::Draw()
 				App->render->Blit(data.tilesets.At(0)->data->texture, x, y, 1, &Tile_Rect(id));
 			counter++;
 		}
+
+
+		
 		// TODO 9: Complete the draw function
 	
 }
@@ -171,6 +179,8 @@ bool j1Map::Load(const char* file_name)
 	{
 		ret = LoadMap();
 	}
+	LoadBackground(map_file);
+	LoadMapPropierties(map_file);
 
 	// Load all tilesets info ----------------------------------------------
 	pugi::xml_node tileset;
@@ -387,6 +397,27 @@ bool j1Map::LoadLayer(pugi::xml_node& node)
 		data.layer_array.add(layer_data);
 		layer = layer.next_sibling("layer");
 	}
+
+	return true;
+}
+
+bool j1Map::LoadBackground(pugi::xml_node& node)
+{
+	data.background_image = App->tex->Load(PATH(folder.GetString(),node.child("map").child("imagelayer").child("image").attribute("source").as_string()));
+
+	data.background_offset.x = node.child("map").child("imagelayer").attribute("offsetx").as_float();
+
+	data.background_offset.y = node.child("map").child("imagelayer").attribute("offsety").as_float();
+
+	return true;
+}
+bool j1Map::LoadMapPropierties(pugi::xml_node& node)
+{
+	data.parallax_speed = node.child("map").attribute("parallax_speed").as_float();
+
+	data.player_starting_value.x = node.child("map").attribute("player_starting_value.x").as_int();
+
+	data.player_starting_value.y = node.child("map").attribute("player_starting_value.y").as_int();
 
 	return true;
 }

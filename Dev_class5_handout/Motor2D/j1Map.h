@@ -40,11 +40,9 @@ struct MapLayer
 	int width;
 	int height;
 	uint* data = nullptr;
-
-
-	// la size me la paso por los huevos y tal.
-
 };
+
+
 
 enum MapTypes
 {
@@ -65,6 +63,9 @@ struct MapData
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*> layer_array;
 	fPoint player_starting_value; //NEW VARIABLE, ADD IT TO XML
+	SDL_Texture* background_image; //NEW VARIABLE, ADD IT TO XML
+	float parallax_speed; //NEW VARIABLE, ADD IT TO XML
+	fPoint background_offset;
 	// TODO 2: Add a list/array of layers to the map!
 };
 
@@ -102,7 +103,7 @@ public:
 
 	void convert_to_real_world(int*, int*);
 
-
+	//starting map
   
 	int map = 1; //NEW VARIABLE, ADD IT TO XML
 
@@ -115,6 +116,8 @@ private:
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	// TODO 3: Create a method that loads a single layer
 	bool LoadLayer(pugi::xml_node& node);
+	bool LoadBackground(pugi::xml_node& node);
+	bool LoadMapPropierties(pugi::xml_node& node);
 
 public:
 

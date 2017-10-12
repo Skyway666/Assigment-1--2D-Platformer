@@ -31,7 +31,7 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {	
 	//App->map->Load("hello.tmx");
-	App->map->Load("Test-map-2.tmx");
+	App->map->Load("Level 1.tmx");
 	App->map->CreateColliders();
 	App->map->map = 0;
 
