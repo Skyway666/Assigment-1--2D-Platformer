@@ -33,7 +33,6 @@ public:
 	Uint32 time = 0;
 	bool allowtime = true;
 
-	bool allowjump = true;
 	bool jumping = false;
 	bool walljumping = false;
 	bool flip = false;
