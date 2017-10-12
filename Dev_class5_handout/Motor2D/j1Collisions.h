@@ -13,6 +13,9 @@ enum COLLIDER_TYPE
 {
 	COLLIDER_NONE = -1,
 	COLLIDER_WALL,
+	COLLIDER_GROUND,
+	COLLIDER_BONE,
+	COLLIDER_DEADLY,
 	COLLIDER_PLAYER,
 
 	COLLIDER_MAX
@@ -42,8 +45,10 @@ struct Collider
 	}
 
 	bool CheckCollision(const SDL_Rect& r) const;
-	bool WillCollideX(const SDL_Rect& r, int speed_x = 0) const;
-	bool WillCollideY(const SDL_Rect& r, int speed_y = 0) const;
+	bool WillCollideLeft(const SDL_Rect& r, int distance) const;
+	bool WillCollideRight(const SDL_Rect& r, int distance) const;
+	bool WillCollideGround(const SDL_Rect& r, int distance) const;
+	bool WillCollideCeiling(const SDL_Rect& r, int distance) const;
 	void OnCollision(Collider*, Collider*) {}
 };
 
@@ -56,7 +61,6 @@ public:
 
 	bool Update(float dt);
 	bool PreUpdate();
-	bool PostUpdate();
 	bool CleanUp();
 	void Erase_Non_Player_Colliders();
 

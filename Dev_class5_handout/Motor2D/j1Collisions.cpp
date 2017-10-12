@@ -2,26 +2,30 @@
 #include "j1Input.h"
 #include "j1Render.h"
 #include "j1Collisions.h"
+#include "j1Player.h"
 
 j1Collisions::j1Collisions()
 {
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;
-	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
-	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
+
+	matrix[COLLIDER_BONE][COLLIDER_BONE] = false;
+	matrix[COLLIDER_BONE][COLLIDER_DEADLY] = false;
+	matrix[COLLIDER_BONE][COLLIDER_PLAYER] = true;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
-	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_BONE] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_DEADLY] = true;
+
+	matrix[COLLIDER_DEADLY][COLLIDER_DEADLY] = false;
+	matrix[COLLIDER_DEADLY][COLLIDER_BONE] = false;
+	matrix[COLLIDER_DEADLY][COLLIDER_PLAYER] = true;
 }
 
 // Destructor
 j1Collisions::~j1Collisions()
 {}
 
-bool j1Collisions::Update(float dt)
-{
-	return true;
-}
 
 
 bool j1Collisions::PreUpdate()
@@ -40,40 +44,52 @@ bool j1Collisions::PreUpdate()
 }
 
 // Called before render is available
-bool j1Collisions::PostUpdate()
+bool j1Collisions::Update(float dt)
 {
-	Collider* c1;
-	Collider* c2;
+	Collider* c;
 
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
-		// skip empty colliders
-		if (colliders[i] == nullptr)
-			continue;
-
-		c1 = colliders[i];
-
-		// avoid checking collisions already checked
-		for (uint k = i + 1; k < MAX_COLLIDERS; ++k)
-		{
-			// skip empty colliders
-			if (colliders[k] == nullptr)
+			// skip empty and player colliders
+			if (colliders[i] == nullptr || colliders[i]->type == COLLIDER_NONE || colliders[i]->type == COLLIDER_PLAYER)
 				continue;
 
-			c2 = colliders[k];
-
-			if (c1->CheckCollision(c2->rect) == true)
+			if (colliders[i]->type == COLLIDER_BONE || colliders[i]->type == COLLIDER_DEADLY)
 			{
+				c = colliders[i];
 
-				if (matrix[c1->type][c2->type])
-					c1->OnCollision(c1, c2);
+				if (App->player->collider->CheckCollision(c->rect) == true)
+				{
+
+					if (matrix[App->player->collider->type][c->type])
+						App->player->collider->OnCollision(App->player->collider, c);
 
 
-				if (matrix[c2->type][c1->type])
-					c2->OnCollision(c2, c1);
+					if (matrix[c->type][App->player->collider->type])
+						c->OnCollision(c, App->player->collider);
 
+				}
 			}
-		}
+			else if (colliders[i]->type == COLLIDER_GROUND && App->player->collider->rect.y + App->player->collider->rect.h > colliders[i]->rect.y)
+			{
+				colliders[i]->type = COLLIDER_WALL;
+			}
+			else if (colliders[i]->type == COLLIDER_WALL && App->player->collider->rect.y + App->player->collider->rect.h < colliders[i]->rect.y + colliders[i]->rect.h && App->player->collider->rect.y + App->player->collider->rect.h < colliders[i]->rect.y)
+			{
+				colliders[i]->type = COLLIDER_GROUND;
+			}
+			
+			if (colliders[i]->type == COLLIDER_GROUND && colliders[i]->WillCollideGround(App->player->collider->rect, 1))
+				App->player->contact.y = 1;
+
+			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideCeiling(App->player->collider->rect, 1))
+				App->player->contact.y = 2;
+			
+			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideLeft(App->player->collider->rect, 1))
+				App->player->contact.x = 1;
+
+			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideRight(App->player->collider->rect, 1))
+				App->player->contact.x = 2;
 	}
 
 	DebugDraw();
@@ -100,11 +116,17 @@ void j1Collisions::DebugDraw()
 		case COLLIDER_NONE: // white
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha, false);
 			break;
-		case COLLIDER_WALL: // blue
-			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha, true);
+		case COLLIDER_PLAYER: // cian
+			App->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha, false);
 			break;
-		case COLLIDER_PLAYER: // green
-			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha, true);
+		case COLLIDER_WALL: // green
+			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha, false);
+			break;
+		case COLLIDER_GROUND: // blue
+			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha, false);
+			break;
+		case COLLIDER_DEADLY: // red
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha, false);
 			break;
 		}
 	}
@@ -170,9 +192,9 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 	}
 }
 
-bool Collider::WillCollideX(const SDL_Rect& r, int speed_x) const
+bool Collider::WillCollideLeft(const SDL_Rect& r, int distance) const
 {
-	if (r.y + r.h > rect.y && r.y < rect.y + rect.h && r.x + r.w > rect.x + speed_x && r.x < rect.x + rect.w + speed_x)
+	if (r.y + r.h > rect.y && r.y < rect.y + rect.h && r.x < rect.x + rect.w + distance && r.x + r.w > rect.x)
 	{
 		return true;
 	}
@@ -183,9 +205,35 @@ bool Collider::WillCollideX(const SDL_Rect& r, int speed_x) const
 	}
 }
 
-bool Collider::WillCollideY(const SDL_Rect& r, int speed_y) const
+bool Collider::WillCollideRight(const SDL_Rect& r, int distance) const
 {
-	if (r.y + r.h > rect.y - speed_y && r.y < rect.y + rect.h + speed_y && r.x + r.w > rect.x && r.x < rect.x + rect.w)
+	if (r.y + r.h > rect.y && r.y < rect.y + rect.h && r.x + r.w > rect.x - distance && r.x < rect.x + rect.w)
+	{
+		return true;
+	}
+
+	else
+	{
+		return false;
+	}
+}
+
+bool Collider::WillCollideGround(const SDL_Rect& r, int distance) const
+{
+	if (r.y < rect.y + rect.h && r.y + r.h > rect.y - distance && r.x + r.w > rect.x && r.x < rect.x + rect.w)
+	{
+		return true;
+	}
+
+	else
+	{
+		return false;
+	}
+}
+
+bool Collider::WillCollideCeiling(const SDL_Rect& r, int distance) const
+{
+	if (r.y + r.h > rect.y && r.y < rect.y + rect.h + distance && r.x + r.w > rect.x && r.x < rect.x + rect.w)
 	{
 		return true;
 	}

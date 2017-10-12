@@ -5,10 +5,14 @@
 	<textures />
 	<audio />
 	<map />
-	<:anonymous />
 	<player>
+<<<<<<< HEAD
 		<player_position x="1835" y="762" />
+=======
+		<player_position x="3806" y="85" />
+>>>>>>> origin/master
 	</player>
 	<scene />
+	<:anonymous />
 	<renderer />
 </game_state>
