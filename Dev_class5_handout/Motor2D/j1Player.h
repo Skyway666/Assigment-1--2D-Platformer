@@ -34,11 +34,13 @@ public:
 
 	bool jumping = false;
 	bool flip = false;
+	bool StickToWall = false;
 
-	iPoint speed;
 	iPoint contact; // y = 0 -> none, y = 1 -> ground, y = 2 -> ceiling /// x = 0 -> none, x = 1 -> left, x = 2 -> right
-	iPoint position;
+	fPoint speed;
+	fPoint position;
 	iPoint sprite_distance;
+	float gravity;
 	float player_x_displacement;
 
 public:
@@ -51,6 +53,7 @@ public:
 	Animation fall;
 	Animation death;
 	Animation slide;
+	Animation wallslide;
 
 };
 

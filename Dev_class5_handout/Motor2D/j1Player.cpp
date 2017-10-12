@@ -27,7 +27,7 @@ j1Player::j1Player()
 	// idle animation
 	for (int i = 0; i < 10; i++)
 		idle.PushBack({ 1 + sprite_distance.x * i, 1 + sprite_distance.y * row, 547, 481 });
-	
+
 	idle.speed = 0.06;
 	row++;
 
@@ -55,7 +55,13 @@ j1Player::j1Player()
 		fall.PushBack({ 1 + sprite_distance.x * i, 1 + sprite_distance.y * row, 547, 481 });
 
 	fall.loop = false;
-	row++;
+
+	// wall slide
+
+	wallslide.PushBack({ 1 + sprite_distance.x * 8, 1 + sprite_distance.y * row, 547, 481 });
+	wallslide.PushBack({ 1 + sprite_distance.x * 9, 1 + sprite_distance.y * row, 547, 481 });
+
+	wallslide.speed = 0.01;
 }
 
 j1Player::~j1Player()
@@ -68,18 +74,22 @@ bool j1Player::Start()
 {
 	LOG("Loading player textures");
 	bool ret = true;
-	graphics = App->tex->Load("textures/SpriteSheet.png");
+	graphics = App->tex->Load("textures/Animations.png");
 
 	SDL_Rect r{ 0, 0, 481, 547 };
 
 
-	SDL_Rect collider_rect{ 0, 0, r.w * 0.2, r.h * 0.2 };
+	SDL_Rect ground{ r.x, r.y + 950, r.w * 20, 100 };
 
+	SDL_Rect collider_rect{ 0, 0, r.w * 0.2, r.h * 0.2 };
 
 	contact.x = 0;
 	contact.y = 0;
 
 	collider = App->collision->AddCollider(collider_rect, COLLIDER_PLAYER);
+
+	gravity = 1;
+
 	return ret;
 }
 
@@ -99,6 +109,11 @@ bool j1Player::PostUpdate()
 
 		if (contact.x != 2)
 			speed.x = 1;
+		else
+		{
+			StickToWall = true;
+			current_animation = &wallslide;
+		}
 	}
 
 	// Moving left
@@ -109,6 +124,11 @@ bool j1Player::PostUpdate()
 
 		if (contact.x != 1)
 			speed.x = -1;
+		else
+		{
+			StickToWall = true;
+			current_animation = &wallslide;
+		}
 	}
 
 	// Sliding
@@ -127,9 +147,12 @@ bool j1Player::PostUpdate()
 	Jump();
 	position.x += speed.x;
 
-	if (contact.y != 1)
-		position.y += 1;
+	if (contact.y != 1 && StickToWall)
+		position.y += gravity / 2;
+	else if (contact.y != 1)
+		position.y += gravity;
 
+	StickToWall = false;
 	contact.x = 0;
 	contact.y = 0;
 
