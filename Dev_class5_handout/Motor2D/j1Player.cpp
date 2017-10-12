@@ -48,6 +48,13 @@ j1Player::j1Player()
 		jump.PushBack({ 1 + sprite_distance.x * i, 1 + sprite_distance.y * row, 547, 481 });
 
 	jump.loop = false;
+
+	// wall slide left
+
+	wallslideleft.PushBack({ 1 + sprite_distance.x * 8, 1 + sprite_distance.y * row, 547, 481 });
+	wallslideleft.PushBack({ 1 + sprite_distance.x * 9, 1 + sprite_distance.y * row, 547, 481 });
+
+	wallslideleft.speed = 0.01;
 	row++;
 
 	// falling
@@ -56,12 +63,12 @@ j1Player::j1Player()
 
 	fall.loop = false;
 
-	// wall slide
+	// wall slide right
 
-	wallslide.PushBack({ 1 + sprite_distance.x * 8, 1 + sprite_distance.y * row, 547, 481 });
-	wallslide.PushBack({ 1 + sprite_distance.x * 9, 1 + sprite_distance.y * row, 547, 481 });
+	wallslideright.PushBack({ 1 + sprite_distance.x * 8, 1 + sprite_distance.y * row, 547, 481 });
+	wallslideright.PushBack({ 1 + sprite_distance.x * 9, 1 + sprite_distance.y * row, 547, 481 });
 
-	wallslide.speed = 0.01;
+	wallslideright.speed = 0.01;
 }
 
 j1Player::~j1Player()
@@ -74,7 +81,7 @@ bool j1Player::Start()
 {
 	LOG("Loading player textures");
 	bool ret = true;
-	graphics = App->tex->Load("textures/Animations.png");
+	graphics = App->tex->Load("textures/SpriteSheet.png");
 
 	SDL_Rect r{ 0, 0, 481, 547 };
 
@@ -109,11 +116,6 @@ bool j1Player::PostUpdate()
 
 		if (contact.x != 2)
 			speed.x = 1;
-		else
-		{
-			StickToWall = true;
-			current_animation = &wallslide;
-		}
 	}
 
 	// Moving left
@@ -124,11 +126,6 @@ bool j1Player::PostUpdate()
 
 		if (contact.x != 1)
 			speed.x = -1;
-		else
-		{
-			StickToWall = true;
-			current_animation = &wallslide;
-		}
 	}
 
 	// Sliding
@@ -138,14 +135,27 @@ bool j1Player::PostUpdate()
 	//}
 
 	// Jumping
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && contact.y == 1)
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && allowjump)
 	{
-		contact.y = 0;
-		jumping = true;
+		if (contact.y == 1)
+		{
+			jumping = true;
+		}
+		else if (contact.x == 1 || contact.x == 2)
+		{
+			walljumping = true;
+		}
+		
+		allowjump = false;
 	}
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP)
+		allowjump = true;
 
+	WallSlide();
 	Jump();
-	position.x += speed.x;
+
+	if (!walljumping)
+		position.x += speed.x;
 
 	if (contact.y != 1 && StickToWall)
 		position.y += gravity / 2;
@@ -173,24 +183,78 @@ bool j1Player::PostUpdate()
 	return true;
 }
 
+void j1Player::WallSlide()
+{
+	if (contact.x == 2 && contact.y != 1)
+	{
+		StickToWall = true;
+		current_animation = &wallslideright;
+		flip = false;
+	}
+	else if (contact.x == 1 && contact.y != 1)
+	{
+		StickToWall = true;
+		current_animation = &wallslideleft;
+		flip = false;
+	}
+}
+
 void j1Player::Jump()
 {
-	if (jumping && allowtime)
+	if (jumping)
 	{
-		time = SDL_GetTicks();
-		allowtime = false;
-	}
+		if (allowtime)
+		{
+			time = SDL_GetTicks();
+			allowtime = false;
+			contact.y = 0;
+		}
 
-	if (jumping && SDL_GetTicks() - time <= 500 && contact.y == 0)
-	{
-		current_animation = &jump;
-		position.y -= speed.y;
+		if (SDL_GetTicks() - time <= 500 && contact.y == 0)
+		{
+			current_animation = &jump;
+			position.y -= speed.y;
+		}
+		else
+		{
+			jumping = false;
+			allowtime = true;
+			jump.Reset();
+		}
 	}
-	else
+	else if (walljumping)
 	{
-		jumping = false;
-		allowtime = true;
-		jump.Reset();
+		if (allowtime)
+		{
+			time = SDL_GetTicks();
+			allowtime = false;
+			jcontact = contact.x;
+			contact.x = 0;
+		}
+
+		if (SDL_GetTicks() - time <= 500 && contact.x == 0)
+		{
+			current_animation = &jump;
+			position.y -= speed.y;
+
+			if (jcontact == 1)
+				position.x += 1;
+			else if (jcontact == 2)
+				position.x -= 1;
+		}
+		else
+		{
+			walljumping = false;
+			allowtime = true;
+			jump.Reset();
+		}
+
+		if (position.y == 1)
+		{
+			walljumping = false;
+			allowtime = true;
+			jump.Reset();
+		}
 	}
 }
 
