@@ -73,17 +73,13 @@ bool j1Player::Start()
 	SDL_Rect r{ 0, 0, 481, 547 };
 
 
-	SDL_Rect ground{ r.x, r.y + 950, r.w * 20, 100 };
-
 	SDL_Rect collider_rect{ 0, 0, r.w * 0.2, r.h * 0.2 };
 
-	Collider* groundo;
 
 	contact.x = 0;
 	contact.y = 0;
 
 	collider = App->collision->AddCollider(collider_rect, COLLIDER_PLAYER);
-	groundo = App->collision->AddCollider(ground, COLLIDER_GROUND);
 	return ret;
 }
 

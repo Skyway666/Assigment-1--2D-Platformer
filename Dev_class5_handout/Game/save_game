@@ -6,11 +6,7 @@
 	<audio />
 	<map />
 	<player>
-<<<<<<< HEAD
-		<player_position x="1835" y="762" />
-=======
-		<player_position x="3806" y="85" />
->>>>>>> origin/master
+		<player_position x="1644" y="813" />
 	</player>
 	<scene />
 	<:anonymous />

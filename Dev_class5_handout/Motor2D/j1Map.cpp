@@ -423,11 +423,11 @@ bool j1Map::LoadBackground(pugi::xml_node& node)
 }
 bool j1Map::LoadMapPropierties(pugi::xml_node& node)
 {
-	data.parallax_speed = node.child("map").attribute("parallax_speed").as_float();
+	data.parallax_speed = node.child("map").child("properties").child("property").attribute("value").as_float();
 
-	data.player_starting_value.x = node.child("map").attribute("player_starting_value.x").as_int();
+	data.player_starting_value.x = node.child("map").child("properties").child("property").next_sibling().attribute("value").as_float();
 
-	data.player_starting_value.y = node.child("map").attribute("player_starting_value.y").as_int();
+	data.player_starting_value.y = node.child("map").child("properties").child("property").next_sibling().next_sibling().attribute("value").as_float();
 
 	return true;
 }
