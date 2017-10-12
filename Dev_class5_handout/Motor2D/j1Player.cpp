@@ -207,7 +207,7 @@ void j1Player::Jump()
 			contact.y = 0;
 		}
 
-		if (SDL_GetTicks() - time <= 500 && contact.y == 0) //THAT "300" SHOULD BE A VARIABLE, ASSHOLE!!
+		if (SDL_GetTicks() - time <= 400 && contact.y == 0) //THAT "300" SHOULD BE A VARIABLE, ASSHOLE!!
 		{
 			current_animation = &jump;
 			position.y -= speed.y;
@@ -269,7 +269,7 @@ void j1Player::Jump()
 bool j1Player::Load(pugi::xml_node& data)
 {
 	position.x = data.child("player_position").attribute("x").as_float();
-	position.y = data.child("player_position").attribute("y").as_float();
+	position.y = data.child("player_position").attribute("y").as_float() -3;
 
 	return true;
 }
