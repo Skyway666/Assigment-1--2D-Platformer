@@ -197,6 +197,7 @@ void j1Player::WallSlide()
 
 void j1Player::Jump()
 {
+	// jump
 	if (jumping)
 	{
 		if (allowtime)
@@ -206,7 +207,7 @@ void j1Player::Jump()
 			contact.y = 0;
 		}
 
-		if (SDL_GetTicks() - time <= 500 && contact.y != 1)
+		if (SDL_GetTicks() - time <= 500 && contact.y == 0)
 		{
 			current_animation = &jump;
 			position.y -= speed.y;
@@ -225,6 +226,7 @@ void j1Player::Jump()
 			jump.Reset();
 		}
 	}
+	// wall jump
 	else if (walljumping)
 	{
 		if (allowtime)
@@ -241,7 +243,10 @@ void j1Player::Jump()
 			position.y -= speed.y;
 
 			if (jcontact == 1)
+			{
 				position.x += 1;
+				flip = true;
+			}
 			else if (jcontact == 2)
 				position.x -= 1;
 		}
