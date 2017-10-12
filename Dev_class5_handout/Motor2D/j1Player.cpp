@@ -70,47 +70,44 @@ bool j1Player::Start()
 	bool ret = true;
 	graphics = App->tex->Load("textures/SpriteSheet.png");
 
-	SDL_Rect r;
-	r.w = 481;
-	r.h = 547;
-	r.x = 0;
-	r.y = 0;
+	SDL_Rect r{ 0, 0, 481, 547 };
 
-	SDL_Rect ground{ r.x, r.y+ 1408, r.w * 20, 100 };
+	SDL_Rect collider_rect{ 0, 0, r.w * 0.2, r.h * 0.2 };
 
-	SDL_Rect collider_rect;
-	collider_rect.x = 0;
-	collider_rect.y = 0;
-	collider_rect.w = r.w* 0.2;
-	collider_rect.h = r.h * 0.2;
+	contact.x = 0;
+	contact.y = 0;
 
 	collider = App->collision->AddCollider(collider_rect, COLLIDER_PLAYER);
-	colliderground = App->collision->AddCollider(ground, COLLIDER_WALL);
+
 	return ret;
 }
 
 // Update: draw background
 bool j1Player::PostUpdate()
 {
-
 	player_x_displacement = App->map->data.player_starting_value.x - position.x;
 	current_animation = &idle;
-	int speed = 0;
+	speed.x = 0;
+	speed.y = 2;
 
 	// Moving right
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		current_animation = &run;
-		speed = 1;
 		flip = false;
+
+		if (contact.x != 2)
+			speed.x = 1;
 	}
 
 	// Moving left
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		current_animation = &run;
-		speed = -1;
 		flip = true;
+
+		if (contact.x != 1)
+			speed.x = -1;
 	}
 
 	// Sliding
@@ -120,21 +117,24 @@ bool j1Player::PostUpdate()
 	//}
 
 	// Jumping
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && contact.y == 1)
 	{
-		if (collider != nullptr && colliderground != nullptr && collider->CheckCollision(colliderground->rect))
-			jumping = true;
+		contact.y = 0;
+		jumping = true;
 	}
 
 	Jump();
-	position.x += speed;
+	position.x += speed.x;
 
-	if (collider != nullptr && colliderground != nullptr && !collider->CheckCollision(colliderground->rect))
+	if (contact.y != 1)
 		position.y += 1;
+
+	contact.x = 0;
+	contact.y = 0;
 
 	// Draw everything --------------------------------------
 
-	App->render->Blit(graphics, position.x, position.y,0.3, &current_animation->GetCurrentFrame(), flip);
+	App->render->Blit(graphics, position.x, position.y, 0.3, &current_animation->GetCurrentFrame(), flip);
 
 	// Set camera to follow the player
 	App->render->camera.x = -position.x + 400;
@@ -143,7 +143,7 @@ bool j1Player::PostUpdate()
 	//Put collider next to player
 	if (collider != nullptr)
 	{
-		collider->SetPos(position.x + 30, position.y+30);
+		collider->SetPos(position.x + 30, position.y + 30);
 	}
 
 	return true;
@@ -157,10 +157,10 @@ void j1Player::Jump()
 		allowtime = false;
 	}
 
-	if (jumping && SDL_GetTicks() - time <= 500)
+	if (jumping && SDL_GetTicks() - time <= 500 && contact.y == 0)
 	{
 		current_animation = &jump;
-		position.y -= 2;
+		position.y -= speed.y;
 	}
 	else
 	{

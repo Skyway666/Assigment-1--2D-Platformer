@@ -45,8 +45,10 @@ struct Collider
 	}
 
 	bool CheckCollision(const SDL_Rect& r) const;
-	bool WillCollideX(const SDL_Rect& r, int speed_x = 0) const;
-	bool WillCollideY(const SDL_Rect& r, int speed_y = 0) const;
+	bool WillCollideLeft(const SDL_Rect& r, int distance) const;
+	bool WillCollideRight(const SDL_Rect& r, int distance) const;
+	bool WillCollideGround(const SDL_Rect& r, int distance) const;
+	bool WillCollideCeiling(const SDL_Rect& r, int distance) const;
 	void OnCollision(Collider*, Collider*) {}
 };
 

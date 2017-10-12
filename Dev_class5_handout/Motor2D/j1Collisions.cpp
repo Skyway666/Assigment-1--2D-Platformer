@@ -76,6 +76,18 @@ bool j1Collisions::Update(float dt)
 			{
 				colliders[i]->type = COLLIDER_GROUND;
 			}
+			
+			if (colliders[i]->type == COLLIDER_GROUND && colliders[i]->WillCollideGround(App->player->collider->rect, 1))
+				App->player->contact.y = 1;
+
+			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideCeiling(App->player->collider->rect, 1))
+				App->player->contact.y = 2;
+			
+			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideLeft(App->player->collider->rect, 1))
+				App->player->contact.x = 1;
+
+			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideRight(App->player->collider->rect, 1))
+				App->player->contact.x = 2;
 	}
 
 	DebugDraw();
@@ -178,9 +190,9 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 	}
 }
 
-bool Collider::WillCollideX(const SDL_Rect& r, int speed_x) const
+bool Collider::WillCollideLeft(const SDL_Rect& r, int distance) const
 {
-	if (r.y + r.h > rect.y && r.y < rect.y + rect.h && r.x + r.w > rect.x + speed_x && r.x < rect.x + rect.w + speed_x)
+	if (r.y + r.h > rect.y && r.y < rect.y + rect.h && r.x < rect.x + rect.w + distance && r.x + r.w > rect.x)
 	{
 		return true;
 	}
@@ -191,9 +203,35 @@ bool Collider::WillCollideX(const SDL_Rect& r, int speed_x) const
 	}
 }
 
-bool Collider::WillCollideY(const SDL_Rect& r, int speed_y) const
+bool Collider::WillCollideRight(const SDL_Rect& r, int distance) const
 {
-	if (r.y + r.h > rect.y - speed_y && r.y < rect.y + rect.h + speed_y && r.x + r.w > rect.x && r.x < rect.x + rect.w)
+	if (r.y + r.h > rect.y && r.y < rect.y + rect.h && r.x + r.w > rect.x - distance && r.x < rect.x + rect.w)
+	{
+		return true;
+	}
+
+	else
+	{
+		return false;
+	}
+}
+
+bool Collider::WillCollideGround(const SDL_Rect& r, int distance) const
+{
+	if (r.y < rect.y + rect.h && r.y + r.h > rect.y - distance && r.x + r.w > rect.x && r.x < rect.x + rect.w)
+	{
+		return true;
+	}
+
+	else
+	{
+		return false;
+	}
+}
+
+bool Collider::WillCollideCeiling(const SDL_Rect& r, int distance) const
+{
+	if (r.y + r.h > rect.y && r.y < rect.y + rect.h + distance && r.x + r.w > rect.x && r.x < rect.x + rect.w)
 	{
 		return true;
 	}

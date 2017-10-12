@@ -28,12 +28,18 @@ public:
 public:
 
 	Collider* collider;
-	Collider* colliderground;
-	Collider* colliderground2;
-	bool allowtime = true;
+
 	Uint32 time = 0;
+	bool allowtime = true;
+
 	bool jumping = false;
 	bool flip = false;
+
+	iPoint speed;
+	iPoint contact; // y = 0 -> none, y = 1 -> ground, y = 2 -> ceiling /// x = 0 -> none, x = 1 -> left, x = 2 -> right
+	iPoint position;
+	iPoint sprite_distance;
+	float player_x_displacement;
 
 public:
 
@@ -45,9 +51,6 @@ public:
 	Animation fall;
 	Animation death;
 	Animation slide;
-	iPoint position;
-	iPoint sprite_distance;
-	float player_x_displacement;
 
 };
 
