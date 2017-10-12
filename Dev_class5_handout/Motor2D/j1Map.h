@@ -64,7 +64,7 @@ struct MapData
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*> layer_array;
-	fPoint camera_starting_values; //NEW VARIABLE, ADD IT TO XML
+	fPoint player_starting_value; //NEW VARIABLE, ADD IT TO XML
 	// TODO 2: Add a list/array of layers to the map!
 };
 

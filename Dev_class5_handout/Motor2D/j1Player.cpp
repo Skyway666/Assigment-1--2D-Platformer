@@ -131,6 +131,11 @@ bool j1Player::PostUpdate()
 
 	App->render->Blit(graphics, position.x, position.y,0.3, &current_animation->GetCurrentFrame(), flip);
 
+	// Set camera to follow the player
+	App->render->camera.x = -position.x + 400;
+	App->render->camera.y = -position.y + 400;
+
+	//Put collider next to player
 	if (collider != nullptr)
 	{
 		collider->SetPos(position.x + 30, position.y+30);
