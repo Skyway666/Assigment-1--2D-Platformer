@@ -87,7 +87,7 @@ bool j1Scene::Update(float dt)
 		else if (App->map->map == 2)
 		{
 			App->map->CleanUp();
-			App->map->Load("Test-map-1.tmx");
+			App->map->Load("Level 1.tmx");
 			App->map->map = 0;
 
 		}

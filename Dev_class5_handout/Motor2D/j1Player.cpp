@@ -9,6 +9,7 @@
 
 j1Player::j1Player()
 {
+	name.create("player");
 	position.x = 0;
 	position.y = 1600;
 	int row = 0;
@@ -163,4 +164,23 @@ void j1Player::Jump()
 		allowtime = true;
 		jump.Reset();
 	}
+}
+
+bool j1Player::Load(pugi::xml_node& data)
+{
+	position.x = data.child("player_position").attribute("x").as_float();
+	position.y = data.child("player_position").attribute("y").as_float();
+
+	return true;
+}
+
+// Save Game State
+bool j1Player::Save(pugi::xml_node& data) const
+{
+	pugi::xml_node player = data.append_child("player_position");
+
+	player.append_attribute("x") = position.x;
+	player.append_attribute("y") = position.y;
+
+	return true;
 }
