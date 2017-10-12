@@ -59,7 +59,9 @@ j1Player::j1Player()
 }
 
 j1Player::~j1Player()
-{}
+{
+	App->tex->UnLoad(graphics);
+}
 
 // Load assets
 bool j1Player::Start()
@@ -120,12 +122,11 @@ bool j1Player::PostUpdate()
 	// Jumping
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
-		//if (collider != nullptr && colliderground != nullptr && collider->CheckCollision(colliderground->rect))
-			//jumping = true;
-		position.y -= 2;
+		if (collider != nullptr && colliderground != nullptr && collider->CheckCollision(colliderground->rect))
+			jumping = true;
 	}
 
-	//Jump();
+	Jump();
 	position.x += speed;
 
 	if (collider != nullptr && colliderground != nullptr && !collider->CheckCollision(colliderground->rect))

@@ -58,7 +58,7 @@ public:
 	~j1Collisions();
 
 	bool PreUpdate();
-	bool PostUpdate();
+	bool Update(float dt);
 	bool CleanUp();
 	void Erase_Non_Player_Colliders();
 
