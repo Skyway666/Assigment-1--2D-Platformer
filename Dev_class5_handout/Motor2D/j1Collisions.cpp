@@ -18,6 +18,12 @@ j1Collisions::j1Collisions()
 j1Collisions::~j1Collisions()
 {}
 
+bool j1Collisions::Update(float dt)
+{
+	return true;
+}
+
+
 bool j1Collisions::PreUpdate()
 {
 	// Remove all colliders scheduled for deletion

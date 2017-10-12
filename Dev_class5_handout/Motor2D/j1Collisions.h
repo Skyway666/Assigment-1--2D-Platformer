@@ -54,6 +54,7 @@ public:
 	j1Collisions();
 	~j1Collisions();
 
+	bool Update(float dt);
 	bool PreUpdate();
 	bool PostUpdate();
 	bool CleanUp();

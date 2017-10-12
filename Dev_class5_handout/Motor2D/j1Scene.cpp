@@ -31,12 +31,9 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {	
 	//App->map->Load("hello.tmx");
-	App->map->Load("Level 1.tmx");
+	App->map->Load("Level 1 final.tmx");
 	App->map->CreateColliders();
 	App->map->map = 0;
-
-	App->render->camera.x = 0; //SHOULD BE USING "camera_starting_values"
-	App->render->camera.y = -1778;
 
 	return true;
 }

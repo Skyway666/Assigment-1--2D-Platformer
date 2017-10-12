@@ -71,19 +71,21 @@ void j1Map::Draw()
 		while (counter < data.layer_array.At(0)->data->height*data.layer_array.At(0)->data->width)
 		{
 			int id = data.layer_array.At(0)->data->data[counter]; //devuelve el tipo de tileset
-			int x = counter;
-			int y = data.layer_array.At(0)->data->width;
-			Get(&x, &y);
 
-			//Now, x and y are the coordinates of the tileset
+			if(id != 0)
+			{ 
+				int x = counter;
+				int y = data.layer_array.At(0)->data->width;
+				Get(&x, &y);
 
-			convert_to_real_world(&x, &y);
+				//Now, x and y are the coordinates of the tileset
 
-			//Now they are in pixels
+				convert_to_real_world(&x, &y);
 
-			//App->render->Blit(data.tilesets.At(0)->data->texture, x, y, &data.tilesets.At(0)->data->GetTileRect(id));
+				//Now they are in pixels
 		
 				App->render->Blit(data.tilesets.At(0)->data->texture, x, y, 1, &Tile_Rect(id));
+			}
 			counter++;
 		}
 

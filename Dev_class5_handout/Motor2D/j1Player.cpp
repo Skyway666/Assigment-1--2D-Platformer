@@ -11,7 +11,7 @@ j1Player::j1Player()
 {
 	name.create("player");
 	position.x = 0;
-	position.y = 1600;
+	position.y = 0;
 	int row = 0;
 
 	sprite_distance.x = 548;
@@ -74,7 +74,7 @@ bool j1Player::Start()
 	r.x = 0;
 	r.y = 0;
 
-	SDL_Rect ground{ r.x, r.y+ 1408, r.w * 20, 100 };
+	SDL_Rect ground{ r.x, r.y + 950, r.w * 20, 100 };
 
 	SDL_Rect collider_rect;
 	collider_rect.x = 0;
