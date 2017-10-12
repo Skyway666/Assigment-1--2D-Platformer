@@ -105,7 +105,7 @@ public:
 
 	//starting map
   
-	int map = 1; //NEW VARIABLE, ADD IT TO XML
+	int map = 0; //Starting map //NEW VARIABLE, ADD IT TO XML
 
 
 

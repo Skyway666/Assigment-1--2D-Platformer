@@ -47,12 +47,12 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
 
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	if(App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
-
+	
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		App->render->camera.y -= 1;
@@ -68,26 +68,7 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{ 
-		if(App->map->map == 0)
-		{ 
-			App->map->CleanUp();
-			App->map->Load("hello2.tmx");
-			App->map->map = 1;
-		}
 
-		else if (App->map->map == 1)
-		{
-		    App->map->CleanUp();
-			App->map->Load("hello.tmx");
-			App->map->map = 2;
-		}
-		else if (App->map->map == 2)
-		{
-			App->map->CleanUp();
-			App->map->Load("Level 1.tmx");
-			App->map->map = 0;
-
-		}
 	}
 	
 

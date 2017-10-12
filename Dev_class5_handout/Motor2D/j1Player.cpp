@@ -147,6 +147,21 @@ bool j1Player::PostUpdate()
 		}
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+		if(App->map->map != 0)
+		{ 
+		   App->map->Load("Level 1 final.tmx");
+		}
+		position.x = App->map->data.player_starting_value.x;
+		position.y = App->map->data.player_starting_value.y - 3;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		position.x = App->map->data.player_starting_value.x;
+		position.y = App->map->data.player_starting_value.y - 3;
+	}
+
 	WallSlide();
 	Jump();
 
