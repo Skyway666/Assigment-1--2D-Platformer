@@ -2,6 +2,7 @@
 #include "j1Input.h"
 #include "j1Render.h"
 #include "j1Collisions.h"
+#include "j1Player.h"
 
 j1Collisions::j1Collisions()
 {
@@ -43,38 +44,38 @@ bool j1Collisions::PreUpdate()
 // Called before render is available
 bool j1Collisions::PostUpdate()
 {
-	Collider* c1;
-	Collider* c2;
+	Collider* c;
 
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
-		// skip empty colliders
-		if (colliders[i] == nullptr)
-			continue;
-
-		c1 = colliders[i];
-
-		// avoid checking collisions already checked
-		for (uint k = i + 1; k < MAX_COLLIDERS; ++k)
-		{
-			// skip empty colliders
-			if (colliders[k] == nullptr)
+			// skip empty and player colliders
+			if (colliders[i] == nullptr || colliders[i]->type == COLLIDER_NONE || colliders[i]->type == COLLIDER_PLAYER)
 				continue;
 
-			c2 = colliders[k];
-
-			if (c1->CheckCollision(c2->rect) == true)
+			if (colliders[i]->type == COLLIDER_BONE || colliders[i]->type == COLLIDER_DEADLY)
 			{
+				c = colliders[i];
 
-				if (matrix[c1->type][c2->type])
-					c1->OnCollision(c1, c2);
+				if (App->player->collider->CheckCollision(c->rect) == true)
+				{
+
+					if (matrix[App->player->collider->type][c->type])
+						App->player->collider->OnCollision(App->player->collider, c);
 
 
-				if (matrix[c2->type][c1->type])
-					c2->OnCollision(c2, c1);
+					if (matrix[c->type][App->player->collider->type])
+						c->OnCollision(c, App->player->collider);
 
+				}
 			}
-		}
+			else if (colliders[i]->type == COLLIDER_GROUND && App->player->collider->rect.y + App->player->collider->rect.h > colliders[i]->rect.y)
+			{
+				colliders[i]->type = COLLIDER_WALL;
+			}
+			else if (colliders[i]->type == COLLIDER_WALL && App->player->collider->rect.y + App->player->collider->rect.h < colliders[i]->rect.y + colliders[i]->rect.h && App->player->collider->rect.y + App->player->collider->rect.h < colliders[i]->rect.y)
+			{
+				colliders[i]->type = COLLIDER_GROUND;
+			}
 	}
 
 	DebugDraw();
@@ -101,17 +102,17 @@ void j1Collisions::DebugDraw()
 		case COLLIDER_NONE: // white
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha, false);
 			break;
-		case COLLIDER_PLAYER: // blue
-			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha, true);
+		case COLLIDER_PLAYER: // cian
+			App->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha, false);
 			break;
 		case COLLIDER_WALL: // green
-			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha, true);
+			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha, false);
 			break;
-		case COLLIDER_GROUND: // yellow
-			App->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha, true);
+		case COLLIDER_GROUND: // blue
+			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha, false);
 			break;
 		case COLLIDER_DEADLY: // red
-			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha, true);
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha, false);
 			break;
 		}
 	}
