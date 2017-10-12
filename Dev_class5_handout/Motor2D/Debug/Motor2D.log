@@ -1,9 +1,8 @@
-﻿  j1Player.cpp
-c:\users\gaming\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(31): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\gaming\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(82): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-c:\users\gaming\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(83): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-c:\users\gaming\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(133): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\gaming\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(171): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\gaming\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(172): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+﻿  j1Map.cpp
+c:\users\gaming\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1map.cpp(66): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\gaming\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1map.cpp(244): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\gaming\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1map.cpp(245): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\gaming\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1map.cpp(426): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\gaming\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1map.cpp(428): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   Motor2D.vcxproj -> C:\Users\Gaming\Documents\GitHub\Assigment-1--2D-Platformer\Dev_class5_handout\Debug\Motor 2D.exe
   Motor2D.vcxproj -> C:\Users\Gaming\Documents\GitHub\Assigment-1--2D-Platformer\Dev_class5_handout\Debug\Motor 2D.pdb (Full PDB)

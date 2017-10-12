@@ -47,6 +47,7 @@ public:
 	Animation slide;
 	iPoint position;
 	iPoint sprite_distance;
+	float player_x_displacement;
 
 };
 

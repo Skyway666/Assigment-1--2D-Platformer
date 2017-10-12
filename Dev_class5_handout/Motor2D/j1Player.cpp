@@ -3,7 +3,7 @@
 #include "j1Input.h"
 #include "j1Render.h"
 #include "j1Player.h"
-
+#include "j1Map.h"
 #include "p2Log.h"
 
 
@@ -90,6 +90,8 @@ bool j1Player::Start()
 // Update: draw background
 bool j1Player::PostUpdate()
 {
+
+	player_x_displacement = App->map->data.player_starting_value.x - position.x;
 	current_animation = &idle;
 	int speed = 0;
 

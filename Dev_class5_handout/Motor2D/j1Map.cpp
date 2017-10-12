@@ -63,7 +63,7 @@ void j1Map::Draw()
 
 
 	//Blit background
-     App->render->Blit(data.background_image, data.background_offset.x, data.background_offset.y);
+     App->render->Blit(data.background_image, data.background_offset.x - App->player->player_x_displacement * data.parallax_speed, data.background_offset.y);
 
 
 	// TODO 5: Prepare the loop to draw all tilesets + Blit
