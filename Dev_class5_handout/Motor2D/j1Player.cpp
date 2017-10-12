@@ -73,7 +73,7 @@ bool j1Player::Start()
 	r.x = 0;
 	r.y = 0;
 
-	SDL_Rect ground{ r.x, r.y + 2300, r.w * 20, 100 };
+	SDL_Rect ground{ r.x, r.y+ 1408, r.w * 20, 100 };
 
 	SDL_Rect collider_rect;
 	collider_rect.x = 0;

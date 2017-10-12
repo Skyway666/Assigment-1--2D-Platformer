@@ -5,6 +5,7 @@
 #include "j1Textures.h"
 #include "j1Map.h"
 #include "j1Collisions.h"
+#include "j1Player.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -62,7 +63,7 @@ void j1Map::Draw()
 
 
 	//Blit background
-     App->render->Blit(data.background_image, data.background_offset.x, -data.background_offset.y);
+     App->render->Blit(data.background_image, data.background_offset.x, data.background_offset.y);
 
 
 	// TODO 5: Prepare the loop to draw all tilesets + Blit
@@ -164,6 +165,7 @@ bool j1Map::CleanUp()
 bool j1Map::Load(const char* file_name)
 {
 	bool ret = true;
+
 	p2SString tmp("%s%s", folder.GetString(), file_name);
 
 	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
@@ -236,6 +238,12 @@ bool j1Map::Load(const char* file_name)
 			item_layer = item_layer->next;
 		}
 	}
+
+	//Set player starting position
+
+	App->player->position.x = data.player_starting_value.x;
+	App->player->position.y = data.player_starting_value.y;
+
 
 	map_loaded = ret;
 
