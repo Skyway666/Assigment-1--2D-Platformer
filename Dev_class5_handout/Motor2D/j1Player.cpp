@@ -135,7 +135,7 @@ bool j1Player::PostUpdate()
 	//}
 
 	// Jumping
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && allowjump)
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 	{
 		if (contact.y == 1)
 		{
@@ -145,11 +145,7 @@ bool j1Player::PostUpdate()
 		{
 			walljumping = true;
 		}
-		
-		allowjump = false;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP)
-		allowjump = true;
 
 	WallSlide();
 	Jump();
@@ -210,12 +206,19 @@ void j1Player::Jump()
 			contact.y = 0;
 		}
 
-		if (SDL_GetTicks() - time <= 500 && contact.y == 0)
+		if (SDL_GetTicks() - time <= 500 && contact.y != 1)
 		{
 			current_animation = &jump;
 			position.y -= speed.y;
 		}
 		else
+		{
+			jumping = false;
+			allowtime = true;
+			jump.Reset();
+		}
+
+		if (contact.y == 1 && (contact.x == 1 || contact.x == 2))
 		{
 			jumping = false;
 			allowtime = true;
@@ -249,7 +252,7 @@ void j1Player::Jump()
 			jump.Reset();
 		}
 
-		if (position.y == 1)
+		if (contact.y == 1 || contact.x == 1 || contact.x == 2)
 		{
 			walljumping = false;
 			allowtime = true;
