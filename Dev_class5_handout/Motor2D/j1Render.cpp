@@ -117,14 +117,14 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, float size_scaling, cons
 	{
 		rect.w = section->w * size_scaling;
 		rect.h = section->h * size_scaling;
+		rect.w *= scale;
+		rect.h *= scale;
 	}
 	else
 	{
 		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
 	}
 
-	rect.w *= scale;
-	rect.h *= scale;
 
 	SDL_Point* p = NULL;
 	SDL_Point pivot;

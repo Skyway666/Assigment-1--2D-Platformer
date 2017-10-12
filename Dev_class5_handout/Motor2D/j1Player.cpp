@@ -210,7 +210,7 @@ void j1Player::Jump()
 			contact.y = 0;
 		}
 
-		if (SDL_GetTicks() - time <= 500 && contact.y == 0)
+		if (SDL_GetTicks() - time <= 500 && contact.y == 0) //THAT "300" SHOULD BE A VARIABLE, ASSHOLE!!
 		{
 			current_animation = &jump;
 			position.y -= speed.y;
