@@ -3,6 +3,7 @@
 #include "j1Render.h"
 #include "j1Collisions.h"
 #include "j1Player.h"
+#include "j1Map.h"
 
 j1Collisions::j1Collisions()
 {
@@ -62,11 +63,24 @@ bool j1Collisions::Update(float dt)
 				{
 
 					if (matrix[App->player->collider->type][c->type])
-						App->player->collider->OnCollision(App->player->collider, c);
-
-
-					if (matrix[c->type][App->player->collider->type])
-						c->OnCollision(c, App->player->collider);
+					{
+						if (c->type == COLLIDER_DEADLY)
+						{
+							App->player->dead = true;
+						}
+						if (c->type == COLLIDER_BONE)
+						{
+							if(App->map->map == 0)
+							{ 
+								//App->map->Load("Level 2 final"); //Map 2 still not done
+								App->map->map = 1;
+							}
+							if (App->map->map == 1)
+							{
+								//The player would win.
+							}
+						}
+					}
 
 				}
 			}
@@ -126,7 +140,7 @@ void j1Collisions::DebugDraw()
 			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha, false);
 			break;
 		case COLLIDER_DEADLY: // red
-			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha, false);
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha, true);
 			break;
 		}
 	}

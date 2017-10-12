@@ -30,8 +30,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	collision = new j1Collisions();
 	player = new j1Player();
 
-	// Ordered for awake / Start / Update
-	// Reverse order of CleanUp
 	AddModule(input);
 	AddModule(win);
 	AddModule(tex);
@@ -41,14 +39,12 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(collision);
 
-	// render last to swap buffer
 	AddModule(render);
 }
 
 // Destructor
 j1App::~j1App()
 {
-	// release modules
 	p2List_item<j1Module*>* item = modules.end;
 
 	while(item != NULL)
@@ -82,7 +78,6 @@ bool j1App::Awake()
 
 	if(config.empty() == false)
 	{
-		// self-config
 		ret = true;
 		app_config = config.child("app");
 		title.create(app_config.child("title").child_value());
@@ -283,25 +278,15 @@ const char* j1App::GetOrganization() const
 // Load / Save
 void j1App::LoadGame()
 {
-	// we should be checking if that file actually exist
-	// from the "GetSaveGames" list
 	want_to_load = true;
 }
 
 // ---------------------------------------
 void j1App::SaveGame() const
 {
-	// we should be checking if that file actually exist
-	// from the "GetSaveGames" list ... should we overwrite ?
-
 	want_to_save = true;
 }
 
-// ---------------------------------------
-void j1App::GetSaveGames(p2List<p2SString>& list_to_fill) const
-{
-	// need to add functionality to file_system module for this to work
-}
 
 bool j1App::LoadGameNow()
 {
@@ -346,7 +331,6 @@ bool j1App::SavegameNow() const
 
 	LOG("Saving Game State to %s...", save_game.GetString());
 
-	// xml object were we will store all data
 	pugi::xml_document data;
 	pugi::xml_node root;
 	

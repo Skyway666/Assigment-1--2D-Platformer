@@ -86,7 +86,7 @@ bool j1Player::Start()
 	SDL_Rect r{ 0, 0, 481, 547 };
 
 
-	SDL_Rect ground{ r.x, r.y + 950, r.w * 20, 100 };
+	SDL_Rect ground{ r.x + 1000, r.y + 900, r.w, 100 };
 
 	SDL_Rect collider_rect{ 0, 0, r.w * 0.2, r.h * 0.2 };
 
@@ -94,6 +94,8 @@ bool j1Player::Start()
 	contact.y = 0;
 
 	collider = App->collision->AddCollider(collider_rect, COLLIDER_PLAYER);
+
+    spike_test_collider = App->collision->AddCollider(ground, COLLIDER_DEADLY); // Just to test deadly colliders
 
 	gravity = 1;
 
@@ -107,6 +109,15 @@ bool j1Player::PostUpdate()
 	current_animation = &idle;
 	speed.x = 0;
 	speed.y = 2;
+
+	if (dead)
+	{
+		position.x = App->map->data.player_starting_value.x - 3;
+		position.y = App->map->data.player_starting_value.y;
+
+		//Something else should be implemented, a timer to let death animation finish at least
+		dead = false;
+	}
 
 	// Moving right
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)

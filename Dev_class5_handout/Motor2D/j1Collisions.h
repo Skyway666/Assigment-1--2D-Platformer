@@ -17,8 +17,7 @@ enum COLLIDER_TYPE
 	COLLIDER_BONE,
 	COLLIDER_DEADLY,
 	COLLIDER_PLAYER,
-
-	COLLIDER_MAX
+	COLLIDER_MAX,
 };
 
 struct Collider
@@ -49,7 +48,6 @@ struct Collider
 	bool WillCollideRight(const SDL_Rect& r, int distance) const;
 	bool WillCollideGround(const SDL_Rect& r, int distance) const;
 	bool WillCollideCeiling(const SDL_Rect& r, int distance) const;
-	void OnCollision(Collider*, Collider*) {}
 };
 
 class j1Collisions : public j1Module

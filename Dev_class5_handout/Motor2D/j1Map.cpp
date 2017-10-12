@@ -31,10 +31,6 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 void j1Map::CreateColliders()
 {
-	if(map_loaded == false)
-		return;
-
-	// TODO 5: Prepare the loop to draw all tilesets + Blit
 	int counter = 0;
 		while (counter < data.layer_array.At(1)->data->height*data.layer_array.At(1)->data->width)
 		{
@@ -65,8 +61,6 @@ void j1Map::Draw()
 	//Blit background
      App->render->Blit(data.background_image, data.background_offset.x - App->player->player_x_displacement * data.parallax_speed, data.background_offset.y);
 
-
-	// TODO 5: Prepare the loop to draw all tilesets + Blit
 	int counter = 0;
 		while (counter < data.layer_array.At(0)->data->height*data.layer_array.At(0)->data->width)
 		{
@@ -88,11 +82,6 @@ void j1Map::Draw()
 			}
 			counter++;
 		}
-
-
-		
-		// TODO 9: Complete the draw function
-	
 }
 
 
@@ -153,11 +142,6 @@ bool j1Map::CleanUp()
 	}
 	data.tilesets.clear();
 	data.layer_array.clear();
-	// TODO 2: clean up all layer data
-	// Remove all layers
-
-
-	// Clean up the pugui tree
 	map_file.reset();
 
 	return true;
@@ -205,8 +189,6 @@ bool j1Map::Load(const char* file_name)
 
 		data.tilesets.add(set);
 	}
-
-	// TODO 4: Iterate all layers and load each of them
 	// Load layer info ----------------------------------------------
 	LoadLayer(map_file);
 
@@ -226,9 +208,6 @@ bool j1Map::Load(const char* file_name)
 			LOG("spacing: %d margin: %d", s->spacing, s->margin);
 			item = item->next;
 		}
-
-		// TODO 4: Add info here about your loaded layers
-		// Adapt this vcode with your own variables
 		
 		p2List_item<MapLayer*>* item_layer = data.layer_array.start;
 		while(item_layer != NULL)
@@ -241,11 +220,16 @@ bool j1Map::Load(const char* file_name)
 		}
 	}
 
-	//Set player starting position
+	if (ret = true)
+	{
+		CreateColliders();
+	}
 
+    //Set player starting position
 	App->player->position.x = data.player_starting_value.x;
 	App->player->position.y = data.player_starting_value.y;
 
+	
 
 	map_loaded = ret;
 
@@ -379,7 +363,6 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 	return ret;
 }
 
-// TODO 3: Create the definition for a function that loads a single layer
 bool j1Map::LoadLayer(pugi::xml_node& node)
 {
 	pugi::xml_node layer = node.child("map").child("layer");

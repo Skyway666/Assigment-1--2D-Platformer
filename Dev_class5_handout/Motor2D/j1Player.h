@@ -29,7 +29,7 @@ public:
 public:
 
 	Collider* collider;
-
+	Collider* spike_test_collider; // Just to test deadly colliders
 	Uint32 time = 0;
 	bool allowtime = true;
 
@@ -37,6 +37,7 @@ public:
 	bool walljumping = false;
 	bool flip = false;
 	bool StickToWall = false;
+	bool dead = false;
 	int jcontact = 0; // for Jump() function
 
 	iPoint contact; // y = 0 -> none, y = 1 -> ground, y = 2 -> ceiling /// x = 0 -> none, x = 1 -> left, x = 2 -> right

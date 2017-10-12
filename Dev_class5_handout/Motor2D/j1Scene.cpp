@@ -30,9 +30,8 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {	
-	//App->map->Load("hello.tmx");
 	App->map->Load("Level 1 final.tmx");
-	App->map->CreateColliders();
+	//App->map->CreateColliders();
 	App->map->map = 0;
 
 	return true;
@@ -72,11 +71,7 @@ bool j1Scene::Update(float dt)
 	}
 	
 
-	//App->render->Blit(img, 0, 0);
 	App->map->Draw();
-
-	// TODO 7: Set the window title like
-	// "Map:%dx%d Tiles:%dx%d Tilesets:%d"
 	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 					App->map->data.width, App->map->data.height,
 					App->map->data.tile_width, App->map->data.tile_height,
