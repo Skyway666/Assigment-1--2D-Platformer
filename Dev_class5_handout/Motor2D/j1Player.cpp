@@ -180,11 +180,13 @@ bool j1Player::PostUpdate()
 		speed.x = 1.5;
 	else if (flip && sliding && contact.x != 1)
 		speed.x = -1.5;
+
 	if (!walljumping)
 		position.x += speed.x;
 
 	if (contact.y != 1 && StickToWall)
 		position.y += gravity / 2;
+
 	else if (contact.y != 1)
 		position.y += gravity;
 
@@ -203,7 +205,10 @@ bool j1Player::PostUpdate()
 	//Put collider next to player
 	if (collider != nullptr)
 	{
-		collider->SetPos(position.x + 30, position.y + 30);
+		if (!sliding)
+		  collider->SetPos(position.x + 30, position.y + 30);
+		else
+			collider->SetPos(position.x, position.y + 547 * 0.2 +10);
 	}
 
 	return true;
@@ -304,10 +309,11 @@ void j1Player::Slide()
 		{
 			time = SDL_GetTicks();
 			allowtime = false;
-			collider->SetSize(481 * 0.2, 1);
+			collider->SetSize(481 * 0.2 + 50, 1);
+			player_height_before_sliding = position.y;
+			
 		}
-
-		if (SDL_GetTicks() - time <= 400)
+		if (SDL_GetTicks() - time <= 400) // THAT "400" SHOULD ALSO BE A VARIABLE
 		{
 			current_animation = &slide;
 		}
@@ -320,6 +326,8 @@ void j1Player::Slide()
 			sliding = false;
 			allowtime = true;
 			collider->SetSize(481 * 0.2, 547 * 0.2);
+			if (contact.y == 1)
+			position.y = player_height_before_sliding - 3;
 		}
 	}
 }

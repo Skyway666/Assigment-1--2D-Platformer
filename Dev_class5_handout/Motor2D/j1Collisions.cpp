@@ -257,3 +257,8 @@ bool Collider::WillCollideCeiling(const SDL_Rect& r, int distance) const
 		return false;
 	}
 }
+
+bool j1Collisions::WillCollideAfterSlide(const SDL_Rect& r, int distance) const
+{
+	return true;
+}

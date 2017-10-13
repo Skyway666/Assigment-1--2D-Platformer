@@ -48,6 +48,8 @@ struct Collider
 	bool WillCollideRight(const SDL_Rect& r, int distance) const;
 	bool WillCollideGround(const SDL_Rect& r, int distance) const;
 	bool WillCollideCeiling(const SDL_Rect& r, int distance) const;
+
+
 };
 
 class j1Collisions : public j1Module
@@ -61,6 +63,8 @@ public:
 	bool PreUpdate();
 	bool CleanUp();
 	void Erase_Non_Player_Colliders();
+
+	bool WillCollideAfterSlide(const SDL_Rect& r, int distance) const; //checks if any rectangle would be colliding with the ceiling
 
 	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type);
 

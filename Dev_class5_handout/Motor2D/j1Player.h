@@ -34,6 +34,7 @@ public:
 	Uint32 time = 0;
 	bool allowtime = true;
 
+	float player_height_before_sliding;
 	bool jumping = false;
 	bool walljumping = false;
 	bool flip = false;
