@@ -57,6 +57,7 @@ struct MapData
 	fPoint player_starting_value; //NEW VARIABLE, ADD IT TO XML
 	SDL_Texture* background_image; //NEW VARIABLE, ADD IT TO XML
 	float parallax_speed; //NEW VARIABLE, ADD IT TO XML
+	int camera_y_limit; //NEW VARIABLE, ADD IT TO XML
 	fPoint background_offset;
 };
 

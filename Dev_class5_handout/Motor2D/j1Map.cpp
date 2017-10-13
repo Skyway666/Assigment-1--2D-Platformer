@@ -44,9 +44,13 @@ void j1Map::CreateColliders()
 			convert_to_real_world(&x, &y);
 
 			//Now they are in pixels
-			if(id == 11 || id == 12)
+			if(id == 11)
 			{ 
 				App->collision->AddCollider({ x,y,data.tilesets.At(0)->data->tile_width, data.tilesets.At(0)->data->tile_height }, COLLIDER_WALL);
+			}
+			if (id == 12)
+			{
+				App->collision->AddCollider({ x,y,data.tilesets.At(0)->data->tile_width, data.tilesets.At(0)->data->tile_height }, COLLIDER_DEADLY);
 			}
 			counter++;
 		}
@@ -406,11 +410,14 @@ bool j1Map::LoadBackground(pugi::xml_node& node)
 }
 bool j1Map::LoadMapPropierties(pugi::xml_node& node)
 {
+
 	data.parallax_speed = node.child("map").child("properties").child("property").attribute("value").as_float();
 
 	data.player_starting_value.x = node.child("map").child("properties").child("property").next_sibling().attribute("value").as_float();
 
 	data.player_starting_value.y = node.child("map").child("properties").child("property").next_sibling().next_sibling().attribute("value").as_float();
+
+	data.camera_y_limit = node.child("map").child("properties").child("property").next_sibling().next_sibling().next_sibling().attribute("value").as_float();
 
 	return true;
 }

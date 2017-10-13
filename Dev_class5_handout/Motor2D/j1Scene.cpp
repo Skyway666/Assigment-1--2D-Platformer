@@ -70,7 +70,10 @@ bool j1Scene::Update(float dt)
 
 	}
 	
-
+	if (App->render->camera.y < App->map->data.camera_y_limit)
+	{
+		App->render->camera.y = App->map->data.camera_y_limit;
+	}
 	App->map->Draw();
 	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 					App->map->data.width, App->map->data.height,
