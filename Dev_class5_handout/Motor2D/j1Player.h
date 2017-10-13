@@ -31,6 +31,8 @@ public:
 
 	Collider* collider;
 	Collider* spike_test_collider; // Just to test deadly colliders
+
+	SDL_Rect rect_after_sliding;
 	Uint32 time = 0;
 	bool allowtime = true;
 
@@ -49,6 +51,7 @@ public:
 	iPoint sprite_distance;
 	float gravity;
 	float player_x_displacement;
+
 
 public:
 
