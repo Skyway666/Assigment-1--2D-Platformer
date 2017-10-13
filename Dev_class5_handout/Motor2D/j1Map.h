@@ -5,6 +5,7 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"
+#include "Animation.h"
 
 struct TileSet
 {
@@ -99,7 +100,9 @@ public:
   
 	int map = 0; //Starting map //NEW VARIABLE, ADD IT TO XML
 
-	SDL_Rect bone_rect = { 4513, 973,249,493 };
+	SDL_Texture* bone_graphics = nullptr;
+
+	Animation bone_animation;
 
 
 private:

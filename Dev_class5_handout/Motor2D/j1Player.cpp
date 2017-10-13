@@ -81,6 +81,7 @@ bool j1Player::Start()
 	LOG("Loading player textures");
 	bool ret = true;
 	graphics = App->tex->Load("textures/SpriteSheet.png");
+	App->map->bone_graphics = App->tex->Load("textures/BONE.png");
 
 	SDL_Rect r{ 0, 0, 481, 547 };
 

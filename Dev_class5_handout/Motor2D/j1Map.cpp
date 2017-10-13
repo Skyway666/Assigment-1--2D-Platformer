@@ -24,7 +24,11 @@ bool j1Map::Awake(pugi::xml_node& config)
 	bool ret = true;
 
 	folder.create(config.child("folder").child_value());
-	
+
+
+	bone_animation.PushBack({ 0,0,212,405});
+	bone_animation.PushBack({ 230,0,212,405});
+	bone_animation.PushBack({ 450,0,212,405});
 
 	return ret;
 }
@@ -33,7 +37,7 @@ void j1Map::CreateColliders()
 {
 	int counter = 0;
 	
-	    App->collision->AddCollider({data.bone_position.x, data.bone_position.y,bone_rect.w, bone_rect.h }, COLLIDER_BONE);
+	    App->collision->AddCollider({data.bone_position.x, data.bone_position.y,bone_animation.GetCurrentFrame().w, bone_animation.GetCurrentFrame().h}, COLLIDER_BONE);
 
 		while (counter < data.layer_array.At(1)->data->height*data.layer_array.At(1)->data->width)
 		{
@@ -70,7 +74,7 @@ void j1Map::Draw()
 
 
 	//Blit bone
-	 App->render->Blit(App->player->graphics, data.bone_position.x, data.bone_position.y, 1 , &bone_rect);
+	 App->render->Blit(bone_graphics, data.bone_position.x, data.bone_position.y, 1 , &bone_animation.GetCurrentFrame());
 
 
 	int counter = 0;
