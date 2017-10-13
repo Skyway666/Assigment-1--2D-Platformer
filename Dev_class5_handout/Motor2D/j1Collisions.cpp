@@ -266,7 +266,7 @@ bool j1Collisions::WillCollideAfterSlide(const SDL_Rect& r, int distance) const
 		if (colliders[i] == nullptr || colliders[i]->type == COLLIDER_NONE || colliders[i]->type == COLLIDER_PLAYER)
 			continue;
 
-		if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideCeiling(r, distance))
+		if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideTop(r, distance))
 		{
 			return true;
 		}
