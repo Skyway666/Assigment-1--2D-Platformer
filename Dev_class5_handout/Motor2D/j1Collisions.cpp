@@ -68,16 +68,16 @@ bool j1Collisions::Update(float dt)
 						{
 							App->player->dead = true;
 						}
-						if (c->type == COLLIDER_BONE)
+						else if (c->type == COLLIDER_BONE)
 						{
 							if(App->map->map == 0)
 							{ 
-								//App->map->Load("Level 2 final"); //Map 2 still not done
+								//App->map->Load("Level 2 final"); // Map 2 still not done
 								App->map->map = 1;
 							}
 							if (App->map->map == 1)
 							{
-								//The player would win.
+								// The player would win.
 							}
 						}
 					}
@@ -96,7 +96,7 @@ bool j1Collisions::Update(float dt)
 			if (colliders[i]->type == COLLIDER_GROUND && colliders[i]->WillCollideGround(App->player->collider->rect, 1))
 				App->player->contact.y = 1;
 
-			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideCeiling(App->player->collider->rect, 1))
+			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideTop(App->player->collider->rect, 1))
 				App->player->contact.y = 2;
 			
 			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideLeft(App->player->collider->rect, 1))
@@ -245,7 +245,7 @@ bool Collider::WillCollideGround(const SDL_Rect& r, int distance) const
 	}
 }
 
-bool Collider::WillCollideCeiling(const SDL_Rect& r, int distance) const
+bool Collider::WillCollideTop(const SDL_Rect& r, int distance) const
 {
 	if (r.y + r.h > rect.y && r.y < rect.y + rect.h + distance && r.x + r.w > rect.x && r.x < rect.x + rect.w)
 	{

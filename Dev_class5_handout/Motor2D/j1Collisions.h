@@ -47,7 +47,7 @@ struct Collider
 	bool WillCollideLeft(const SDL_Rect& r, int distance) const;
 	bool WillCollideRight(const SDL_Rect& r, int distance) const;
 	bool WillCollideGround(const SDL_Rect& r, int distance) const;
-	bool WillCollideCeiling(const SDL_Rect& r, int distance) const;
+	bool WillCollideTop(const SDL_Rect& r, int distance) const;
 
 
 };
