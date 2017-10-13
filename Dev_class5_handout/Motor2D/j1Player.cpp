@@ -61,8 +61,6 @@ j1Player::j1Player()
 	for (int i = 0; i < 7; i++)
 		fall.PushBack({ 1 + sprite_distance.x * i, 1 + sprite_distance.y * row, 547, 481 });
 
-	fall.loop = false;
-
 	// wall slide right
 
 	wallslideright.PushBack({ 1 + sprite_distance.x * 8, 1 + sprite_distance.y * row, 547, 481 });
@@ -105,7 +103,12 @@ bool j1Player::Start()
 bool j1Player::PostUpdate()
 {
 	player_x_displacement = App->map->data.player_starting_value.x - position.x;
-	current_animation = &idle;
+
+	if (contact.y == 1)
+		current_animation = &idle;
+	else
+		current_animation = &fall;
+
 	speed.x = 0;
 	speed.y = 2;
 
@@ -127,9 +130,10 @@ bool j1Player::PostUpdate()
 	// Moving right
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !sliding)
 	{
-		current_animation = &run;
 		flip = false;
 
+		if (contact.y == 1)
+			current_animation = &run;
 		if (contact.x != 2)
 			speed.x = 1;
 	}
@@ -137,9 +141,10 @@ bool j1Player::PostUpdate()
 	// Moving left
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !sliding)
 	{
-		current_animation = &run;
 		flip = true;
 
+		if (contact.y == 1)
+			current_animation = &run;
 		if (contact.x != 1)
 			speed.x = -1;
 	}
@@ -314,7 +319,7 @@ void j1Player::Slide()
 			collider->SetSize(481 * 0.2 + 50, App->map->data.tile_height - 1);
 			player_height_before_sliding = position.y;
 		}
-		if (SDL_GetTicks() - time <= 400) // No it shouldn't, it should be just enough to go through the sliding areas.
+		if (SDL_GetTicks() - time <= 200) // No it shouldn't, it should be just enough to go through the sliding areas.
 		{
 			current_animation = &slide;
 			rect_after_sliding.x = position.x;
