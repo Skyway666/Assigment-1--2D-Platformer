@@ -115,8 +115,8 @@ bool j1Player::PostUpdate()
 
 	if (dead)
 	{
-		position.x = App->map->data.player_starting_value.x - 3;
-		position.y = App->map->data.player_starting_value.y;
+		position.x = App->map->data.player_starting_value.x;
+		position.y = App->map->data.player_starting_value.y - 5;
 
 		//Something else should be implemented, a timer to let death animation finish at least
 		dead = false;
@@ -215,7 +215,7 @@ bool j1Player::PostUpdate()
 		if (!sliding)
 		  collider->SetPos(position.x + 30, position.y + 30);
 		else
-			collider->SetPos(position.x, position.y + 547 * 0.2 - App->map->data.tile_height - 1);
+			collider->SetPos(position.x, position.y + 547 * 0.2 - App->map->data.tile_height - 1 + 50);
 	}
 
 	return true;
@@ -318,7 +318,7 @@ void j1Player::Slide()
 		{
 			time = SDL_GetTicks();
 			allowtime = false;
-			collider->SetSize(481 * 0.2 + 50, App->map->data.tile_height - 1);
+			collider->SetSize(481 * 0.2 + 50, App->map->data.tile_height - 1 -50);
 			player_height_before_sliding = position.y;
 			App->audio->PlayFx(2);
 		}

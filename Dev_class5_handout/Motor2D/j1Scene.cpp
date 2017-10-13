@@ -30,7 +30,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {	
-	App->map->Load("Level 1 final.tmx");
+	App->map->Load("Level 2 final.tmx");
 	//App->map->CreateColliders();
 	App->map->map = 0;
 
