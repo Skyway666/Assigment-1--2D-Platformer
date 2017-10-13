@@ -6,7 +6,7 @@
 #include "j1Map.h"
 #include "p2Log.h"
 #include "j1Audio.h"
-
+#include "j1Scene.h"
 
 j1Player::j1Player()
 {
@@ -82,6 +82,7 @@ bool j1Player::Start()
 	bool ret = true;
 	graphics = App->tex->Load("textures/SpriteSheet.png");
 	App->map->bone_graphics = App->tex->Load("textures/BONE.png");
+	App->scene->win_screen = App->tex->Load("textures/WinScreen.png");
 
 	SDL_Rect r{ 0, 0, 481, 547 };
 
@@ -127,62 +128,65 @@ bool j1Player::PostUpdate()
 		dead = false;
 	}
 
-	// Sliding
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN && contact.y == 1)
-	{
-		sliding = true;
-	}
-
-	// Moving right
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !sliding)
-	{
-		flip = false;
-
-		if (contact.y == 1)
-			current_animation = &run;
-		if (contact.x != 2)
-			speed.x = 1;
-	}
-
-	// Moving left
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !sliding)
-	{
-		flip = true;
-
-		if (contact.y == 1)
-			current_animation = &run;
-		if (contact.x != 1)
-			speed.x = -1;
-	}
-
-	// Jumping
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && !sliding)
-	{
-		if (contact.y == 1)
+	if(!win)
+	{ 
+		// Sliding
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN && contact.y == 1)
 		{
-			jumping = true;
+			sliding = true;
 		}
-		else if (contact.x == 1 || contact.x == 2)
-		{
-			walljumping = true;
-		}
-	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-	{
-		if(App->map->map != 0)
-		{ 
-		   App->collision->Erase_Non_Player_Colliders();
-		   App->map->CleanUp();
-		   App->map->Load("Level 1 final.tmx");
+		// Moving right
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !sliding)
+		{
+			flip = false;
+
+			if (contact.y == 1)
+				current_animation = &run;
+			if (contact.x != 2)
+				speed.x = 1;
 		}
-		position.x = App->map->data.player_starting_value.x;
-		position.y = App->map->data.player_starting_value.y - 5;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-	{
-		position.x = App->map->data.player_starting_value.x;
-		position.y = App->map->data.player_starting_value.y - 5;
+
+		// Moving left
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !sliding)
+		{
+			flip = true;
+
+			if (contact.y == 1)
+				current_animation = &run;
+			if (contact.x != 1)
+				speed.x = -1;
+		}
+
+		// Jumping
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && !sliding)
+		{
+			if (contact.y == 1)
+			{
+				jumping = true;
+			}
+			else if (contact.x == 1 || contact.x == 2)
+			{
+				walljumping = true;
+			}
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		{
+			if(App->map->map != 0)
+			{ 
+			   App->collision->Erase_Non_Player_Colliders();
+			   App->map->CleanUp();
+			   App->map->Load("Level 1 final.tmx");
+			}
+			position.x = App->map->data.player_starting_value.x;
+			position.y = App->map->data.player_starting_value.y - 5;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		{
+			position.x = App->map->data.player_starting_value.x;
+			position.y = App->map->data.player_starting_value.y - 5;
+		}
 	}
 
 	WallSlide();
@@ -226,6 +230,13 @@ bool j1Player::PostUpdate()
 	}
 
 	frames++;
+
+	if(win == true)
+	{ 
+	    App->render->Blit(App->scene->win_screen, position.x- 400, position.y - 400);
+	}
+
+
 	return true;
 }
 
@@ -331,7 +342,7 @@ void j1Player::Slide()
 			player_height_before_sliding = position.y;
 			App->audio->PlayFx(2);
 		}
-		if (frames - time <= 100) // No it shouldn't, it should be just enough to go through the sliding areas.
+		if (frames - time <= 100) 
 		{
 			current_animation = &slide;
 			rect_after_sliding.x = position.x;

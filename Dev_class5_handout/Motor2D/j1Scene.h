@@ -9,6 +9,12 @@ class j1Scene : public j1Module
 {
 public:
 
+	SDL_Texture* win_screen;
+
+	int time;
+
+	bool time_gotten;
+
 	j1Scene();
 
 	// Destructor

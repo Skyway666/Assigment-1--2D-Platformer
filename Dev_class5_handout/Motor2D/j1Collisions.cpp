@@ -77,9 +77,13 @@ bool j1Collisions::Update(float dt)
 								App->map->Load("Level 2 final.tmx"); // Map 2 still not done
 								App->map->map = 1;
 							}
-							if (App->map->map == 1)
+							else if (App->map->map == 1)
 							{
-								// The player would win.
+								App->collision->Erase_Non_Player_Colliders();
+								App->map->CleanUp();
+								App->map->Load("Level 1 final.tmx"); 
+								App->map->map = 0;
+								App->player->win = true;
 							}
 						}
 					}
