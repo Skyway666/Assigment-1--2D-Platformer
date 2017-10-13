@@ -103,6 +103,11 @@ bool j1Player::Start()
 // Update: draw background
 bool j1Player::PostUpdate()
 {
+	if (contact.x != 0)
+		speed.y = 2;
+	else
+		speed.y = 3;
+
 	player_x_displacement = App->map->data.player_starting_value.x - position.x;
 
 	if (contact.y == 1)
@@ -111,7 +116,6 @@ bool j1Player::PostUpdate()
 		current_animation = &fall;
 
 	speed.x = 0;
-	speed.y = 2;
 
 	if (dead)
 	{
@@ -167,7 +171,7 @@ bool j1Player::PostUpdate()
 	{
 		if(App->map->map != 0)
 		{ 
-		   App->map->Load("Level 1 final.tmx");
+		   App->map->Load("Level 2 final.tmx");
 		}
 		position.x = App->map->data.player_starting_value.x;
 		position.y = App->map->data.player_starting_value.y - 5;
@@ -218,6 +222,7 @@ bool j1Player::PostUpdate()
 			collider->SetPos(position.x, position.y + 547 * 0.2 - App->map->data.tile_height - 1 + 50);
 	}
 
+	frames++;
 	return true;
 }
 
@@ -244,13 +249,13 @@ void j1Player::Jump()
 	{
 		if (allowtime)
 		{
-			time = SDL_GetTicks();
+			time = frames;
 			allowtime = false;
 			contact.y = 0;
 			App->audio->PlayFx(1);
 		}
 
-		if (SDL_GetTicks() - time <= 400 && contact.y == 0)
+		if (frames - time <= 100 && contact.y == 0)
 		{
 			current_animation = &jump;
 			position.y -= speed.y;
@@ -274,16 +279,17 @@ void j1Player::Jump()
 	{
 		if (allowtime)
 		{
-			time = SDL_GetTicks();
+			time = frames;
 			allowtime = false;
 			jcontact = contact.x;
 			contact.x = 0;
+			App->audio->PlayFx(1);
 		}
 
-		if (SDL_GetTicks() - time <= 500 && contact.x == 0)
+		if (frames - time <= 200 && contact.x == 0)
 		{
 			current_animation = &jump;
-			position.y -= speed.y;
+			position.y -= speed.y - 1;
 
 			if (jcontact == 1)
 			{
@@ -316,13 +322,13 @@ void j1Player::Slide()
 	{
 		if (allowtime)
 		{
-			time = SDL_GetTicks();
+			time = frames;
 			allowtime = false;
-			collider->SetSize(481 * 0.2 + 50, App->map->data.tile_height - 1 -50);
+			collider->SetSize( 481 * 0.2 + 50, App->map->data.tile_height - 1 -50);
 			player_height_before_sliding = position.y;
 			App->audio->PlayFx(2);
 		}
-		if (SDL_GetTicks() - time <= 200) // No it shouldn't, it should be just enough to go through the sliding areas.
+		if (frames - time <= 100) // No it shouldn't, it should be just enough to go through the sliding areas.
 		{
 			current_animation = &slide;
 			rect_after_sliding.x = position.x;
@@ -335,7 +341,7 @@ void j1Player::Slide()
 	
 		else if (App->collision->WillCollideAfterSlide(rect_after_sliding , 1) && contact.x == 0)
 		{
-			time = SDL_GetTicks();
+			time = frames;
 		}
 		else
 		{

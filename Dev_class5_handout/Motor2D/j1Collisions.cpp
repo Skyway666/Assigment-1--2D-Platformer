@@ -93,16 +93,16 @@ bool j1Collisions::Update(float dt)
 				colliders[i]->type = COLLIDER_GROUND;
 			}
 			
-			if (colliders[i]->type == COLLIDER_GROUND && colliders[i]->WillCollideGround(App->player->collider->rect, 1))
+			if (colliders[i]->type == COLLIDER_GROUND && colliders[i]->WillCollideGround(App->player->collider->rect, App->player->gravity))
 				App->player->contact.y = 1;
 
-			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideTop(App->player->collider->rect, 1))
+			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideTop(App->player->collider->rect, App->player->gravity))
 				App->player->contact.y = 2;
 			
-			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideLeft(App->player->collider->rect, 1))
+			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideLeft(App->player->collider->rect, App->player->gravity))
 				App->player->contact.x = 1;
 
-			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideRight(App->player->collider->rect, 1))
+			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideRight(App->player->collider->rect, App->player->gravity))
 				App->player->contact.x = 2;
 	}
 
