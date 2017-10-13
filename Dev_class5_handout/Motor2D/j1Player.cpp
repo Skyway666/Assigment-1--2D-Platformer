@@ -90,7 +90,6 @@ bool j1Player::Start()
 
 	contact.x = 0;
 	contact.y = 0;
-	speed.y = 3;
 
 	collider = App->collision->AddCollider(collider_rect, COLLIDER_PLAYER);
 
@@ -104,6 +103,11 @@ bool j1Player::Start()
 // Update: draw background
 bool j1Player::PostUpdate()
 {
+	if (contact.x != 0)
+		speed.y = 2;
+	else
+		speed.y = 3;
+
 	player_x_displacement = App->map->data.player_starting_value.x - position.x;
 
 	if (contact.y == 1)
