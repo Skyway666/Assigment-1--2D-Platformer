@@ -33,7 +33,8 @@ public:
 	Collider* spike_test_collider; // Just to test deadly colliders
 
 	SDL_Rect rect_after_sliding;
-	Uint32 time = 0;
+	int frames = 0;
+	int time = 0;
 	bool allowtime = true;
 
 	float player_height_before_sliding;
