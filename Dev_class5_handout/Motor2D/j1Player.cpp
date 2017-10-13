@@ -5,6 +5,7 @@
 #include "j1Player.h"
 #include "j1Map.h"
 #include "p2Log.h"
+#include "j1Audio.h"
 
 
 j1Player::j1Player()
@@ -246,6 +247,7 @@ void j1Player::Jump()
 			time = SDL_GetTicks();
 			allowtime = false;
 			contact.y = 0;
+			App->audio->PlayFx(1);
 		}
 
 		if (SDL_GetTicks() - time <= 400 && contact.y == 0)
@@ -318,6 +320,7 @@ void j1Player::Slide()
 			allowtime = false;
 			collider->SetSize(481 * 0.2 + 50, App->map->data.tile_height - 1);
 			player_height_before_sliding = position.y;
+			App->audio->PlayFx(2);
 		}
 		if (SDL_GetTicks() - time <= 200) // No it shouldn't, it should be just enough to go through the sliding areas.
 		{
