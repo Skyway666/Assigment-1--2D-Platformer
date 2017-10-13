@@ -410,14 +410,33 @@ bool j1Map::LoadBackground(pugi::xml_node& node)
 }
 bool j1Map::LoadMapPropierties(pugi::xml_node& node)
 {
+	pugi::xml_node iterator = node.child("map").child("properties").child("property");
+	while (iterator != nullptr)
+	{ 
+		p2SString name = iterator.attribute("name").as_string();
 
-	data.parallax_speed = node.child("map").child("properties").child("property").attribute("value").as_float();
+		if(name == "parallax_speed")
+		{ 
+			data.parallax_speed = iterator.attribute("value").as_float();
+		}
 
-	data.player_starting_value.x = node.child("map").child("properties").child("property").next_sibling().attribute("value").as_float();
+		if (name == "player_starting_valuex")
+		{
+			data.player_starting_value.x = iterator.attribute("value").as_float();
+		}
 
-	data.player_starting_value.y = node.child("map").child("properties").child("property").next_sibling().next_sibling().attribute("value").as_float();
+		if (name == "player_starting_valuey")
+		{
+			data.player_starting_value.y = iterator.attribute("value").as_float();
+		}
 
-	data.camera_y_limit = node.child("map").child("properties").child("property").next_sibling().next_sibling().next_sibling().attribute("value").as_float();
+		if( name == "camera_y_limit")
+		{ 
+		    data.camera_y_limit = iterator.attribute("value").as_float();
+		}
+
+		iterator = iterator.next_sibling();
+	}
 
 	return true;
 }

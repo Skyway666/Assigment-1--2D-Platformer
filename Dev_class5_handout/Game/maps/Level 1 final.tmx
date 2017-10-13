@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="24" tilewidth="68" tileheight="68" nextobjectid="1">
  <properties>
-  <property name="camera_y_limit" type="float" value="-1360"/>
+  <property name="camera_y_limit" type="float" value="-700"/>
   <property name="parallax_speed" type="float" value="0.6"/>
   <property name="player_starting_valuex" type="float" value="140"/>
   <property name="player_starting_valuey" type="float" value="800"/>
