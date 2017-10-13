@@ -85,7 +85,6 @@ bool j1Player::Start()
 
 	SDL_Rect r{ 0, 0, 481, 547 };
 
-
 	SDL_Rect ground{ r.x + 1000, r.y + 900, r.w, 100 };
 
 	SDL_Rect collider_rect{ 0, 0, r.w * 0.2, r.h * 0.2 };
@@ -95,7 +94,7 @@ bool j1Player::Start()
 
 	collider = App->collision->AddCollider(collider_rect, COLLIDER_PLAYER);
 
-    spike_test_collider = App->collision->AddCollider(ground, COLLIDER_DEADLY); // Just to test deadly colliders
+   //spike_test_collider = App->collision->AddCollider(ground, COLLIDER_DEADLY); // Just to test deadly colliders
 
 	gravity = 1;
 
@@ -119,8 +118,14 @@ bool j1Player::PostUpdate()
 		dead = false;
 	}
 
+	// Sliding
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN && contact.y == 1)
+	{
+		sliding = true;
+	}
+
 	// Moving right
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !sliding)
 	{
 		current_animation = &run;
 		flip = false;
@@ -130,7 +135,7 @@ bool j1Player::PostUpdate()
 	}
 
 	// Moving left
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !sliding)
 	{
 		current_animation = &run;
 		flip = true;
@@ -139,14 +144,8 @@ bool j1Player::PostUpdate()
 			speed.x = -1;
 	}
 
-	// Sliding
-	//if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-	//{
-	//	current_animation = &slide;
-	//}
-
 	// Jumping
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && !sliding)
 	{
 		if (contact.y == 1)
 		{
@@ -175,7 +174,12 @@ bool j1Player::PostUpdate()
 
 	WallSlide();
 	Jump();
+	Slide();
 
+	if (!flip && sliding && contact.x != 2)
+		speed.x = 1.5;
+	else if (flip && sliding && contact.x != 1)
+		speed.x = -1.5;
 	if (!walljumping)
 		position.x += speed.x;
 
@@ -233,7 +237,7 @@ void j1Player::Jump()
 			contact.y = 0;
 		}
 
-		if (SDL_GetTicks() - time <= 400 && contact.y == 0) //THAT "300" SHOULD BE A VARIABLE, ASSHOLE!!
+		if (SDL_GetTicks() - time <= 400 && contact.y == 0)
 		{
 			current_animation = &jump;
 			position.y -= speed.y;
@@ -288,6 +292,34 @@ void j1Player::Jump()
 			walljumping = false;
 			allowtime = true;
 			jump.Reset();
+		}
+	}
+}
+
+void j1Player::Slide()
+{
+	if (sliding)
+	{
+		if (allowtime)
+		{
+			time = SDL_GetTicks();
+			allowtime = false;
+			collider->SetSize(481 * 0.2, 1);
+		}
+
+		if (SDL_GetTicks() - time <= 400)
+		{
+			current_animation = &slide;
+		}
+		else if (contact.y == 2)
+		{
+			time = SDL_GetTicks();
+		}
+		else
+		{
+			sliding = false;
+			allowtime = true;
+			collider->SetSize(481 * 0.2, 547 * 0.2);
 		}
 	}
 }
