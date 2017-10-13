@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="24" tilewidth="68" tileheight="68" nextobjectid="1">
  <properties>
+  <property name="bone_positionx" type="float" value="8000"/>
+  <property name="bone_positiony" type="float" value="0"/>
   <property name="camera_y_limit" type="float" value="-700"/>
   <property name="parallax_speed" type="float" value="0.6"/>
   <property name="player_starting_valuex" type="float" value="140"/>
@@ -2896,7 +2898,7 @@
    <tile gid="5"/>
   </data>
  </layer>
- <layer name="Capa de patrones 4" width="120" height="24" visible="0">
+ <layer name="Capa de patrones 4" width="120" height="24">
   <data>
    <tile gid="0"/>
    <tile gid="0"/>

@@ -142,6 +142,9 @@ void j1Collisions::DebugDraw()
 		case COLLIDER_DEADLY: // red
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha, true);
 			break;
+		case COLLIDER_BONE: 
+			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha, true);
+			break;
 		}
 	}
 }

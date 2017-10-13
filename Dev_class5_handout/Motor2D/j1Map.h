@@ -58,6 +58,7 @@ struct MapData
 	SDL_Texture* background_image; //NEW VARIABLE, ADD IT TO XML
 	float parallax_speed; //NEW VARIABLE, ADD IT TO XML
 	int camera_y_limit; //NEW VARIABLE, ADD IT TO XML
+	iPoint bone_position;
 	fPoint background_offset;
 };
 
@@ -98,6 +99,7 @@ public:
   
 	int map = 0; //Starting map //NEW VARIABLE, ADD IT TO XML
 
+	SDL_Rect bone_rect = { 4513, 973,249,493 };
 
 
 private:

@@ -1,2 +1,8 @@
-﻿  Motor2D.vcxproj -> C:\Users\Gaming\Documents\GitHub\Assigment-1--2D-Platformer\Dev_class5_handout\Debug\Motor 2D.exe
+﻿  j1Scene.cpp
+  j1Map.cpp
+c:\users\gaming\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1map.cpp(69): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\gaming\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1map.cpp(443): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\gaming\documents\github\assigment-1--2d-platformer\dev_class5_handout\motor2d\j1map.cpp(448): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
+  Motor2D.vcxproj -> C:\Users\Gaming\Documents\GitHub\Assigment-1--2D-Platformer\Dev_class5_handout\Debug\Motor 2D.exe
   Motor2D.vcxproj -> C:\Users\Gaming\Documents\GitHub\Assigment-1--2D-Platformer\Dev_class5_handout\Debug\Motor 2D.pdb (Full PDB)

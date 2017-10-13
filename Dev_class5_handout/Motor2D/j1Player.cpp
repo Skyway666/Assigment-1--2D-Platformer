@@ -170,12 +170,12 @@ bool j1Player::PostUpdate()
 		   App->map->Load("Level 1 final.tmx");
 		}
 		position.x = App->map->data.player_starting_value.x;
-		position.y = App->map->data.player_starting_value.y - 3;
+		position.y = App->map->data.player_starting_value.y - 5;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
 		position.x = App->map->data.player_starting_value.x;
-		position.y = App->map->data.player_starting_value.y - 3;
+		position.y = App->map->data.player_starting_value.y - 5;
 	}
 
 	WallSlide();

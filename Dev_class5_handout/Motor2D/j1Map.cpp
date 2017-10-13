@@ -32,6 +32,9 @@ bool j1Map::Awake(pugi::xml_node& config)
 void j1Map::CreateColliders()
 {
 	int counter = 0;
+	
+	    App->collision->AddCollider({data.bone_position.x, data.bone_position.y,bone_rect.w, bone_rect.h }, COLLIDER_BONE);
+
 		while (counter < data.layer_array.At(1)->data->height*data.layer_array.At(1)->data->width)
 		{
 			int id = data.layer_array.At(1)->data->data[counter]; //devuelve el tipo de tileset
@@ -64,6 +67,11 @@ void j1Map::Draw()
 
 	//Blit background
      App->render->Blit(data.background_image, data.background_offset.x - App->player->player_x_displacement * data.parallax_speed, data.background_offset.y);
+
+
+	//Blit bone
+	 App->render->Blit(App->player->graphics, data.bone_position.x, data.bone_position.y, 1 , &bone_rect);
+
 
 	int counter = 0;
 		while (counter < data.layer_array.At(0)->data->height * data.layer_array.At(0)->data->width)
@@ -433,6 +441,16 @@ bool j1Map::LoadMapPropierties(pugi::xml_node& node)
 		if( name == "camera_y_limit")
 		{ 
 		    data.camera_y_limit = iterator.attribute("value").as_float();
+		}
+
+		if (name == "bone_positionx")
+		{
+			data.bone_position.x = iterator.attribute("value").as_float();
+		}
+
+		if (name == "bone_positiony")
+		{
+			data.bone_position.y = iterator.attribute("value").as_int();
 		}
 
 		iterator = iterator.next_sibling();

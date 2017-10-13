@@ -31,7 +31,6 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {	
 	App->map->Load("Level 2 final.tmx");
-	//App->map->CreateColliders();
 	App->map->map = 0;
 
 	return true;
@@ -51,7 +50,6 @@ bool j1Scene::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
-	
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		App->render->camera.y -= 1;
@@ -64,11 +62,6 @@ bool j1Scene::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x += 1;
-
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-	{ 
-
-	}
 	
 	if (App->render->camera.y < App->map->data.camera_y_limit)
 	{

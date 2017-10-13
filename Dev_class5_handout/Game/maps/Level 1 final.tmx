@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="24" tilewidth="68" tileheight="68" nextobjectid="1">
  <properties>
+  <property name="bone_positionx" type="float" value="7400"/>
+  <property name="bone_positiony" type="float" value="700"/>
   <property name="camera_y_limit" type="float" value="-700"/>
   <property name="parallax_speed" type="float" value="0.6"/>
   <property name="player_starting_valuex" type="float" value="140"/>
