@@ -66,7 +66,7 @@ void j1Map::Draw()
      App->render->Blit(data.background_image, data.background_offset.x - App->player->player_x_displacement * data.parallax_speed, data.background_offset.y);
 
 	int counter = 0;
-		while (counter < data.layer_array.At(0)->data->height*data.layer_array.At(0)->data->width)
+		while (counter < data.layer_array.At(0)->data->height * data.layer_array.At(0)->data->width)
 		{
 			int id = data.layer_array.At(0)->data->data[counter]; //devuelve el tipo de tileset
 
