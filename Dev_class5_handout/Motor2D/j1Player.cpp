@@ -302,7 +302,8 @@ void j1Player::Jump()
 }
 
 void j1Player::Slide()
-{
+{	
+	
 	if (sliding)
 	{
 		if (allowtime)
@@ -311,13 +312,19 @@ void j1Player::Slide()
 			allowtime = false;
 			collider->SetSize(481 * 0.2 + 50, 1);
 			player_height_before_sliding = position.y;
-			
 		}
 		if (SDL_GetTicks() - time <= 400) // THAT "400" SHOULD ALSO BE A VARIABLE
 		{
 			current_animation = &slide;
+			rect_after_sliding.x = position.x;
+			rect_after_sliding.y = player_height_before_sliding;
+			rect_after_sliding.h = 547 * 0.2;
+			rect_after_sliding.w = 481 * 0.2;
+
 		}
-		else if (contact.y == 2)
+
+	
+		else if (App->collision->WillCollideAfterSlide(rect_after_sliding , 1) && contact.x == 0)
 		{
 			time = SDL_GetTicks();
 		}

@@ -260,5 +260,17 @@ bool Collider::WillCollideCeiling(const SDL_Rect& r, int distance) const
 
 bool j1Collisions::WillCollideAfterSlide(const SDL_Rect& r, int distance) const
 {
-	return true;
+	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	{
+		// skip empty and player colliders
+		if (colliders[i] == nullptr || colliders[i]->type == COLLIDER_NONE || colliders[i]->type == COLLIDER_PLAYER)
+			continue;
+
+		if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideCeiling(r, distance))
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
