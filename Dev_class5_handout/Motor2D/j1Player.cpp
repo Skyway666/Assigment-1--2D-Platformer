@@ -23,6 +23,7 @@ j1Player::j1Player()
 		death.PushBack({ 1 + sprite_distance.x * i, 1 + sprite_distance.y * row, 547, 481 });
 
 	death.loop = false;
+	death.speed = 0.06;
 	row++;
 
 	// idle animation
@@ -121,14 +122,19 @@ bool j1Player::PostUpdate()
 
 	if (dead)
 	{
+
+		current_animation = &death;
+
+		if(current_animation->Finished())
+		{ 
 		position.x = App->map->data.player_starting_value.x;
 		position.y = App->map->data.player_starting_value.y - 5;
-
-		//Something else should be implemented, a timer to let death animation finish at least
+		death.Reset();
 		dead = false;
+		}
 	}
 
-	if(!win)
+	if(!win && !dead)
 	{ 
 		// Sliding
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN && contact.y == 1)
