@@ -119,9 +119,9 @@ bool j1Player::PostUpdate()
 
 	player_x_displacement = App->map->data.player_starting_value.x - position.x;
 
-	if (contact.y == 1)
+	if (contact.y == 1 && !sliding)
 		current_animation = &idle;
-	else
+	else if (contact.y != 1)
 		current_animation = &fall;
 
 	speed.x = 0;
@@ -370,7 +370,7 @@ void j1Player::Slide()
 			time = frames;
 			allowtime = false;
 			
-			collider->SetSize(collider->rect.w, App->map->data.tile_height -50);
+			collider->SetSize(collider->rect.w + 3, App->map->data.tile_height -50);
 			player_height_before_sliding = position.y;
 			App->audio->PlayFx(2);
 		}
