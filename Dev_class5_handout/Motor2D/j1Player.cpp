@@ -106,6 +106,7 @@ bool j1Player::Start()
 
 	gravity = 1;
 
+	
 	return ret;
 }
 
@@ -402,8 +403,32 @@ void j1Player::Slide()
 
 bool j1Player::Load(pugi::xml_node& data)
 {
-	position.x = data.child("player_position").attribute("x").as_float();
-	position.y = data.child("player_position").attribute("y").as_float() -3;
+	if(App->map->map == data.child("player_position").attribute("map").as_int())
+	{ 
+		position.x = data.child("player_position").attribute("x").as_float();
+		position.y = data.child("player_position").attribute("y").as_float() -3;
+	}
+	else
+	{
+		if (App->map->map == 0)
+		{
+			App->map->map = 1;
+			App->collision->Erase_Non_Player_Colliders();
+			App->map->CleanUp();
+			App->map->Load("Level 2 final.tmx");
+			position.x = data.child("player_position").attribute("x").as_float();
+			position.y = data.child("player_position").attribute("y").as_float() - 3;
+		}
+		else
+		{
+			App->map->map = 0;
+			App->collision->Erase_Non_Player_Colliders();
+			App->map->CleanUp();
+			App->map->Load("Level 1 final.tmx");
+			position.x = data.child("player_position").attribute("x").as_float();
+			position.y = data.child("player_position").attribute("y").as_float() - 3;
+		}
+	}
 
 	return true;
 }
@@ -415,6 +440,7 @@ bool j1Player::Save(pugi::xml_node& data) const
 
 	player.append_attribute("x") = position.x;
 	player.append_attribute("y") = position.y;
+	player.append_attribute("map") = App->map->map;
 
 	return true;
 }

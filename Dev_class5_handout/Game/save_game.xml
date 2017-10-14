@@ -3,7 +3,7 @@
 <game_state>
 
   <player>
-    <player_position x="100" y="0"/>
+    <player_position x="100" y="0" map ="0"/>
   </player>
 
 </game_state>

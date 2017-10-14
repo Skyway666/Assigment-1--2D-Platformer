@@ -166,6 +166,7 @@ bool j1Map::CleanUp()
 		RELEASE(item_->data);
 		item_ = item_->next;
 	}
+	App->tex->UnLoad(data.background_image);
 	data.tilesets.clear();
 	data.layer_array.clear();
 	map_file.reset();
