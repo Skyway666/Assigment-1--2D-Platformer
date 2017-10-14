@@ -9,7 +9,13 @@
   <renderer>
     <vsync value="false"/>
   </renderer>
-
+  
+  <player>
+    <jump_time value =" 100"/>
+    <slide_time value =" 100"/>
+    <walljump_time value =" 200"/>
+  </player>
+  
   <window>
     <resolution width="1024" height="768" scale="1"/>
     <fullscreen value="false"/>

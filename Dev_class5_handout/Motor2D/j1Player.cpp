@@ -76,6 +76,14 @@ j1Player::~j1Player()
 	App->tex->UnLoad(graphics);
 }
 
+bool j1Player::Awake(pugi::xml_node& conf)
+{
+	jump_time = conf.child("jump_time").attribute("value").as_int();
+	slide_time = conf.child("slide_time").attribute("value").as_int();
+	walljump_time = conf.child("walljump_time").attribute("value").as_int();
+
+	return true;
+}
 // Load assets
 bool j1Player::Start()
 {
@@ -292,7 +300,7 @@ void j1Player::Jump()
 			App->audio->PlayFx(1);
 		}
 
-		if (frames - time <= 100 && contact.y == 0)
+		if (frames - time <= jump_time && contact.y == 0)
 		{
 			current_animation = &jump;
 			position.y -= speed.y;
@@ -323,7 +331,7 @@ void j1Player::Jump()
 			App->audio->PlayFx(1);
 		}
 
-		if (frames - time <= 200 && contact.x == 0)
+		if (frames - time <= walljump_time && contact.x == 0)
 		{
 			current_animation = &jump;
 			position.y -= speed.y - 1;
@@ -366,7 +374,7 @@ void j1Player::Slide()
 			player_height_before_sliding = position.y;
 			App->audio->PlayFx(2);
 		}
-		if (frames - time <= 100) 
+		if (frames - time <= slide_time) 
 		{
 			current_animation = &slide;
 			rect_after_sliding.x = position.x;

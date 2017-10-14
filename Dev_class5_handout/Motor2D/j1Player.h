@@ -15,6 +15,8 @@ public:
 	j1Player();
 	~j1Player();
 
+	bool Awake(pugi::xml_node& conf);
+
 	bool Start();
 	bool PostUpdate();
 	
@@ -52,7 +54,9 @@ public:
 	iPoint sprite_distance;
 	float gravity;
 	float player_x_displacement;
-
+	int jump_time;
+	int slide_time;
+	int walljump_time;
 
 public:
 
