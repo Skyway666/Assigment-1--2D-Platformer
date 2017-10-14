@@ -175,9 +175,11 @@ bool j1Player::PostUpdate()
 		{
 			if(App->map->map != 0)
 			{ 
+			   App->map->map = 0;
 			   App->collision->Erase_Non_Player_Colliders();
 			   App->map->CleanUp();
 			   App->map->Load("Level 1 final.tmx");
+
 			}
 			position.x = App->map->data.player_starting_value.x;
 			position.y = App->map->data.player_starting_value.y - 5;
