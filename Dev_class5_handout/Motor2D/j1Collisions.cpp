@@ -74,7 +74,7 @@ bool j1Collisions::Update(float dt)
 							{ 
 								App->collision->Erase_Non_Player_Colliders();
 								App->map->CleanUp();
-								App->map->Load("Level 2 final.tmx"); // Map 2 still not done
+								App->map->Load("Level 2 final.tmx"); 
 								App->map->map = 1;
 							}
 							else if (App->map->map == 1)

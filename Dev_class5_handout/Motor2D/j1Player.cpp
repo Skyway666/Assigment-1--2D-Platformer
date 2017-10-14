@@ -233,9 +233,23 @@ bool j1Player::PostUpdate()
 
 	frames++;
 
+	// Win condition timer
 	if(win == true)
 	{ 
-	    App->render->Blit(App->scene->win_screen, position.x- 400, position.y - 400);
+		if(allowtime)
+		{ 
+		   time = frames;
+		   allowtime = false;
+		}
+	    if(frames - time < 3000)
+		{ 
+	       App->render->Blit(App->scene->win_screen, position.x- 400, position.y - 400);
+		}
+		else
+		{
+			allowtime = true;
+			win = false;
+		}
 	}
 
 
