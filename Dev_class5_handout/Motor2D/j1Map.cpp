@@ -41,7 +41,7 @@ void j1Map::CreateColliders()
 
 		while (counter < data.layer_array.At(1)->data->height*data.layer_array.At(1)->data->width)
 		{
-			int id = data.layer_array.At(1)->data->data[counter]; //devuelve el tipo de tileset
+			int id = data.layer_array.At(1)->data->data[counter]; 
 			int x = counter; 
 			int y = data.layer_array.At(1)->data->width;
 			Get(&x, &y); 
@@ -155,6 +155,16 @@ bool j1Map::CleanUp()
 	{
 		RELEASE(item->data);
 		item = item->next;
+	}
+	data.tilesets.clear();
+
+
+	p2List_item<MapLayer*>* item_;
+	item_ = data.layer_array.start;
+	while (item != NULL)
+	{
+		RELEASE(item_->data);
+		item_ = item_->next;
 	}
 	data.tilesets.clear();
 	data.layer_array.clear();

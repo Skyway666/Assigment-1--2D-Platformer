@@ -55,10 +55,10 @@ struct MapData
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*> layer_array;
-	fPoint player_starting_value; //NEW VARIABLE, ADD IT TO XML
-	SDL_Texture* background_image; //NEW VARIABLE, ADD IT TO XML
-	float parallax_speed; //NEW VARIABLE, ADD IT TO XML
-	int camera_y_limit; //NEW VARIABLE, ADD IT TO XML
+	fPoint player_starting_value; 
+	SDL_Texture* background_image; 
+	float parallax_speed; 
+	int camera_y_limit; 
 	iPoint bone_position;
 	fPoint background_offset;
 };
@@ -90,15 +90,13 @@ public:
 
 	iPoint MapToWorld(int x, int y) const;
 
-	void Get(int* x, int* y); //la x es el numero, la y cuantos elementos hay en una fila
+	void Get(int* x, int* y); //la x is id,  y how much elements are there in a row
 
 	SDL_Rect Tile_Rect(int tileid);
 
 	void convert_to_real_world(int*, int*);
-
-	//starting map
   
-	int map = 0; //Starting map //NEW VARIABLE, ADD IT TO XML
+	int map = 0; //Starting map
 
 	SDL_Texture* bone_graphics = nullptr;
 
