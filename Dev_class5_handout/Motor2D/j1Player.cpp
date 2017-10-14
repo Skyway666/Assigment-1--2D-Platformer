@@ -96,8 +96,6 @@ bool j1Player::Start()
 
 	collider = App->collision->AddCollider(collider_rect, COLLIDER_PLAYER);
 
-   //spike_test_collider = App->collision->AddCollider(ground, COLLIDER_DEADLY); // Just to test deadly colliders
-
 	gravity = 1;
 
 	return ret;
@@ -234,7 +232,10 @@ bool j1Player::PostUpdate()
 		if (!sliding)
 		  collider->SetPos(position.x + 30, position.y + 30);
 		else
-			collider->SetPos(position.x, position.y + 547 * 0.2 - App->map->data.tile_height - 1 + 50);
+		{ 
+			    collider->SetPos(position.x + 30, position.y + 547 * 0.2 - App->map->data.tile_height - 1 + 50);
+		
+		}
 	}
 
 	frames++;
@@ -360,7 +361,8 @@ void j1Player::Slide()
 		{
 			time = frames;
 			allowtime = false;
-			collider->SetSize( 481 * 0.2 + 50, App->map->data.tile_height - 1 -50);
+			
+			collider->SetSize(collider->rect.w, App->map->data.tile_height -50);
 			player_height_before_sliding = position.y;
 			App->audio->PlayFx(2);
 		}

@@ -30,7 +30,6 @@ public:
 public:
 
 	Collider* collider;
-	Collider* spike_test_collider; // Just to test deadly colliders
 
 	SDL_Rect rect_after_sliding;
 	int frames = 0;
