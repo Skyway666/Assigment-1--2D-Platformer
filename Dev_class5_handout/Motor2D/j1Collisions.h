@@ -69,13 +69,6 @@ public:
 
 	void DebugDraw();
 
-public:
-
-	bool AllowPlayerUp = true;
-	bool AllowPlayerDown = true;
-	bool AllowPlayerRight = true;
-	bool AllowPlayerLeft = true;
-
 private:
 
 	Collider* colliders[MAX_COLLIDERS];

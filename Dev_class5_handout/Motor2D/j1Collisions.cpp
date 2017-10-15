@@ -5,8 +5,6 @@
 #include "j1Player.h"
 #include "j1Map.h"
 
-#include <math.h>
-
 j1Collisions::j1Collisions()
 {
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
@@ -15,7 +13,6 @@ j1Collisions::j1Collisions()
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_BONE] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_DEADLY] = true;
-	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
 }
 
 // Destructor
@@ -43,11 +40,6 @@ bool j1Collisions::PreUpdate()
 bool j1Collisions::Update(float dt)
 {
 	Collider* c;
-
-	AllowPlayerDown = true;
-	AllowPlayerUp = true;
-	AllowPlayerLeft = true;
-	AllowPlayerRight = true;
 
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
@@ -91,30 +83,16 @@ bool j1Collisions::Update(float dt)
 				}
 			}
 			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideGround(App->player->collider->rect, ceil(App->player->gravity)))
-			{
 				App->player->contact.y = 1;
-				App->player->speed.y = 0;
-				AllowPlayerDown = false;
-			}
 
 			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideTop(App->player->collider->rect, ceil(App->player->speed.y)))
-			{
 				App->player->contact.y = 2;
-				App->player->speed.y = 0;
-				AllowPlayerUp = false;
-			}
 			
-			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideLeft(App->player->collider->rect, ceil(App->player->speed.x)))
-			{
+			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideLeft(App->player->collider->rect, App->player->speed_modifier.x))
 				App->player->contact.x = 1;
-				AllowPlayerLeft = false;
-			}
 
-			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideRight(App->player->collider->rect, ceil(App->player->speed.x)))
-			{
+			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideRight(App->player->collider->rect, App->player->speed_modifier.x))
 				App->player->contact.x = 2;
-				AllowPlayerRight = false;
-			}
 	}
 
 	DebugDraw();

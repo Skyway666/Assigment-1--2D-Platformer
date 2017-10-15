@@ -26,9 +26,11 @@ bool j1Map::Awake(pugi::xml_node& config)
 	folder.create(config.child("folder").child_value());
 
 
-	bone_animation.PushBack({ 0,0,212,405});
-	bone_animation.PushBack({ 230,0,212,405});
-	bone_animation.PushBack({ 450,0,212,405});
+	bone_animation.PushBack({ 0, 0, 212, 405 });
+	bone_animation.PushBack({ 230, 0, 212, 405 });
+	bone_animation.PushBack({ 450, 0, 212, 405 });
+
+	bone_animation.speed = 0.2;
 
 	return ret;
 }
