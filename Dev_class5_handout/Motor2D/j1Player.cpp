@@ -163,7 +163,7 @@ bool j1Player::PostUpdate()
 
 			if (contact.y == 1)
 				current_animation = &run;
-			if (contact.x != 2)
+			if (App->collision->AllowPlayerRight && contact.x != 2)
 				speed.x = speed_modifier.x;
 		}
 
@@ -174,7 +174,7 @@ bool j1Player::PostUpdate()
 
 			if (contact.y == 1)
 				current_animation = &run;
-			if (contact.x != 1)
+			if (App->collision->AllowPlayerLeft && contact.x != 1)
 				speed.x = -speed_modifier.x;
 		}
 
@@ -215,19 +215,19 @@ bool j1Player::PostUpdate()
 	Jump();
 	Slide();
 
-	if (sliding && contact.x != 1 && flip)
+	if (App->collision->AllowPlayerLeft && sliding && contact.x != 1 && flip)
 		speed.x = -1.5 * speed_modifier.x;
-	else if (sliding && contact.x != 2 && !flip)
+	else if (App->collision->AllowPlayerRight && sliding && contact.x != 2 && !flip)
 		speed.x = 1.5 * speed_modifier.x;
 
 
 	if (!walljumping)
 		position.x += speed.x;
 
-	if (contact.y != 1 && StickToWall)
+	if (App->collision->AllowPlayerDown && contact.y != 1 && StickToWall)
 		position.y += gravity / 2;
 
-	else if (contact.y != 1)
+	else if (App->collision->AllowPlayerDown && contact.y != 1)
 		position.y += gravity;
 
 	StickToWall = false;

@@ -13,7 +13,6 @@ enum COLLIDER_TYPE
 {
 	COLLIDER_NONE = -1,
 	COLLIDER_WALL,
-	COLLIDER_GROUND,
 	COLLIDER_BONE,
 	COLLIDER_DEADLY,
 	COLLIDER_PLAYER,
@@ -69,6 +68,13 @@ public:
 	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type);
 
 	void DebugDraw();
+
+public:
+
+	bool AllowPlayerUp = true;
+	bool AllowPlayerDown = true;
+	bool AllowPlayerRight = true;
+	bool AllowPlayerLeft = true;
 
 private:
 

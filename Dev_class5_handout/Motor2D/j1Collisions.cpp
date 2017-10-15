@@ -5,22 +5,17 @@
 #include "j1Player.h"
 #include "j1Map.h"
 
+#include <math.h>
+
 j1Collisions::j1Collisions()
 {
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;
 
-	matrix[COLLIDER_BONE][COLLIDER_BONE] = false;
-	matrix[COLLIDER_BONE][COLLIDER_DEADLY] = false;
-	matrix[COLLIDER_BONE][COLLIDER_PLAYER] = true;
-
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_BONE] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_DEADLY] = true;
-
-	matrix[COLLIDER_DEADLY][COLLIDER_DEADLY] = false;
-	matrix[COLLIDER_DEADLY][COLLIDER_BONE] = false;
-	matrix[COLLIDER_DEADLY][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
 }
 
 // Destructor
@@ -48,6 +43,11 @@ bool j1Collisions::PreUpdate()
 bool j1Collisions::Update(float dt)
 {
 	Collider* c;
+
+	AllowPlayerDown = true;
+	AllowPlayerUp = true;
+	AllowPlayerLeft = true;
+	AllowPlayerRight = true;
 
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
@@ -90,26 +90,31 @@ bool j1Collisions::Update(float dt)
 
 				}
 			}
-			else if (colliders[i]->type == COLLIDER_GROUND && App->player->collider->rect.y + App->player->collider->rect.h > colliders[i]->rect.y)
+			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideGround(App->player->collider->rect, ceil(App->player->speed.y)))
 			{
-				colliders[i]->type = COLLIDER_WALL;
-			}
-			else if (colliders[i]->type == COLLIDER_WALL && App->player->collider->rect.y + App->player->collider->rect.h < colliders[i]->rect.y + colliders[i]->rect.h && App->player->collider->rect.y + App->player->collider->rect.h < colliders[i]->rect.y)
-			{
-				colliders[i]->type = COLLIDER_GROUND;
-			}
-			
-			if (colliders[i]->type == COLLIDER_GROUND && colliders[i]->WillCollideGround(App->player->collider->rect, App->player->gravity))
 				App->player->contact.y = 1;
+				App->player->speed.y = 0;
+				AllowPlayerDown = false;
+			}
 
-			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideTop(App->player->collider->rect, App->player->gravity))
+			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideTop(App->player->collider->rect, ceil(App->player->gravity)))
+			{
 				App->player->contact.y = 2;
+				App->player->speed.y = 0;
+				AllowPlayerUp = false;
+			}
 			
-			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideLeft(App->player->collider->rect, App->player->gravity))
+			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideLeft(App->player->collider->rect, ceil(App->player->speed.x)))
+			{
 				App->player->contact.x = 1;
+				AllowPlayerLeft = false;
+			}
 
-			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideRight(App->player->collider->rect, App->player->gravity))
+			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideRight(App->player->collider->rect, ceil(App->player->speed.x)))
+			{
 				App->player->contact.x = 2;
+				AllowPlayerRight = false;
+			}
 	}
 
 	DebugDraw();
@@ -136,13 +141,10 @@ void j1Collisions::DebugDraw()
 		case COLLIDER_NONE: // white
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha, false);
 			break;
-		case COLLIDER_PLAYER: // cian
-			App->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha, false);
-			break;
-		case COLLIDER_WALL: // green
+		case COLLIDER_PLAYER: // green
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha, false);
 			break;
-		case COLLIDER_GROUND: // blue
+		case COLLIDER_WALL: // blue
 			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha, false);
 			break;
 		case COLLIDER_DEADLY: // red
