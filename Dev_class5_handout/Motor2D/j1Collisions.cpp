@@ -90,14 +90,14 @@ bool j1Collisions::Update(float dt)
 
 				}
 			}
-			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideGround(App->player->collider->rect, ceil(App->player->speed.y)))
+			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideGround(App->player->collider->rect, ceil(App->player->gravity)))
 			{
 				App->player->contact.y = 1;
 				App->player->speed.y = 0;
 				AllowPlayerDown = false;
 			}
 
-			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideTop(App->player->collider->rect, ceil(App->player->gravity)))
+			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideTop(App->player->collider->rect, ceil(App->player->speed.y)))
 			{
 				App->player->contact.y = 2;
 				App->player->speed.y = 0;
