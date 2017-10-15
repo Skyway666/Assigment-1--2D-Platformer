@@ -23,14 +23,14 @@ j1Player::j1Player()
 		death.PushBack({ 1 + sprite_distance.x * i, 1 + sprite_distance.y * row, 547, 481 });
 
 	death.loop = false;
-	death.speed = 0.06;
+	death.speed = 0.8;
 	row++;
 
 	// idle animation
 	for (int i = 0; i < 10; i++)
 		idle.PushBack({ 1 + sprite_distance.x * i, 1 + sprite_distance.y * row, 547, 481 });
 
-	idle.speed = 0.06;
+	idle.speed = 0.8;
 	row++;
 
 	// running
@@ -56,19 +56,22 @@ j1Player::j1Player()
 	wallslideleft.PushBack({ 1 + sprite_distance.x * 8, 1 + sprite_distance.y * row, 547, 481 });
 	wallslideleft.PushBack({ 1 + sprite_distance.x * 9, 1 + sprite_distance.y * row, 547, 481 });
 
-	wallslideleft.speed = 0.01;
+	wallslideleft.speed = 0.1;
 	row++;
 
 	// falling
 	for (int i = 0; i < 7; i++)
 		fall.PushBack({ 1 + sprite_distance.x * i, 1 + sprite_distance.y * row, 547, 481 });
 
+	fall.speed = 0.2;
+	fall.loop = false;
+
 	// wall slide right
 
 	wallslideright.PushBack({ 1 + sprite_distance.x * 8, 1 + sprite_distance.y * row, 547, 481 });
 	wallslideright.PushBack({ 1 + sprite_distance.x * 9, 1 + sprite_distance.y * row, 547, 481 });
 
-	wallslideright.speed = 0.01;
+	wallslideright.speed = 0.1;
 }
 
 j1Player::~j1Player()
@@ -81,6 +84,9 @@ bool j1Player::Awake(pugi::xml_node& conf)
 	jump_time = conf.child("jump_time").attribute("value").as_int();
 	slide_time = conf.child("slide_time").attribute("value").as_int();
 	walljump_time = conf.child("walljump_time").attribute("value").as_int();
+	speed_modifier.y = conf.child("speed_modifier.y").attribute("value").as_float();
+	speed_modifier.x = conf.child("speed_modifier.x").attribute("value").as_float();
+	gravity = conf.child("gravity").attribute("value").as_float();
 
 	return true;
 }
@@ -104,8 +110,6 @@ bool j1Player::Start()
 
 	collider = App->collision->AddCollider(collider_rect, COLLIDER_PLAYER);
 
-	gravity = 1;
-
 	
 	return ret;
 }
@@ -114,14 +118,17 @@ bool j1Player::Start()
 bool j1Player::PostUpdate()
 {
 	if (contact.x != 0)
-		speed.y = 2;
+		speed.y = speed_modifier.y;
 	else
-		speed.y = 3;
+		speed.y = speed_modifier.y * 1.5;
 
 	player_x_displacement = App->map->data.player_starting_value.x - position.x;
 
 	if (contact.y == 1 && !sliding)
+	{
 		current_animation = &idle;
+		fall.Reset();
+	}
 	else if (contact.y != 1)
 		current_animation = &fall;
 
@@ -134,14 +141,14 @@ bool j1Player::PostUpdate()
 
 		if(current_animation->Finished())
 		{ 
-		position.x = App->map->data.player_starting_value.x;
-		position.y = App->map->data.player_starting_value.y - 5;
-		death.Reset();
-		dead = false;
+			position.x = App->map->data.player_starting_value.x;
+			position.y = App->map->data.player_starting_value.y - 5;
+			death.Reset();
+			dead = false;
 		}
 	}
 
-	if(!win && !dead)
+	if (!win && !dead)
 	{ 
 		// Sliding
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN && contact.y == 1)
@@ -157,7 +164,7 @@ bool j1Player::PostUpdate()
 			if (contact.y == 1)
 				current_animation = &run;
 			if (contact.x != 2)
-				speed.x = 1;
+				speed.x = speed_modifier.x;
 		}
 
 		// Moving left
@@ -168,7 +175,7 @@ bool j1Player::PostUpdate()
 			if (contact.y == 1)
 				current_animation = &run;
 			if (contact.x != 1)
-				speed.x = -1;
+				speed.x = -speed_modifier.x;
 		}
 
 		// Jumping
@@ -209,9 +216,9 @@ bool j1Player::PostUpdate()
 	Slide();
 
 	if (sliding && contact.x != 1 && flip)
-		speed.x = -1.5;
+		speed.x = -1.5 * speed_modifier.x;
 	else if (sliding && contact.x != 2 && !flip)
-		speed.x = 1.5;
+		speed.x = 1.5 * speed_modifier.x;
 
 
 	if (!walljumping)
@@ -299,6 +306,7 @@ void j1Player::Jump()
 			allowtime = false;
 			contact.y = 0;
 			App->audio->PlayFx(1);
+			fall.Reset();
 		}
 
 		if (frames - time <= jump_time && contact.y == 0)
@@ -323,6 +331,8 @@ void j1Player::Jump()
 	// wall jump
 	else if (walljumping)
 	{
+		fall.Reset();
+
 		if (allowtime)
 		{
 			time = frames;
@@ -335,15 +345,15 @@ void j1Player::Jump()
 		if (frames - time <= walljump_time && contact.x == 0)
 		{
 			current_animation = &jump;
-			position.y -= speed.y - 1;
+			position.y -= speed.y * 0.8;
 
 			if (jcontact == 1)
 			{
-				position.x += 1;
+				position.x += speed_modifier.x;
 				flip = true;
 			}
 			else if (jcontact == 2)
-				position.x -= 1;
+				position.x -= speed_modifier.x;
 		}
 		else
 		{

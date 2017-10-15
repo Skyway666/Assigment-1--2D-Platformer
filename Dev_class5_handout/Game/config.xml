@@ -11,9 +11,12 @@
   </renderer>
   
   <player>
-    <jump_time value =" 100"/>
-    <slide_time value =" 100"/>
-    <walljump_time value =" 200"/>
+    <jump_time value =" 15"/>
+    <slide_time value =" 15"/>
+    <walljump_time value =" 30"/>
+    <speed_modifier.y value =" 12"/>
+    <speed_modifier.x value =" 10"/>
+    <gravity value =" 6"/>
   </player>
   
   <window>

@@ -52,6 +52,7 @@ public:
 	fPoint speed;
 	fPoint position;
 	iPoint sprite_distance;
+	fPoint speed_modifier;
 	float gravity;
 	float player_x_displacement;
 	int jump_time;
