@@ -70,9 +70,6 @@ bool j1Scene::Update(float dt)
 	}
 
 	App->map->Draw();
-	p2SString title("Who let the dog Jump?");
-
-	App->win->SetTitle(title.GetString());
 	return true;
 }
 
