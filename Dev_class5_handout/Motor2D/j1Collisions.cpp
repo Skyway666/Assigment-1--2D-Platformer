@@ -47,7 +47,21 @@ bool j1Collisions::Update(float dt)
 			if (colliders[i] == nullptr || colliders[i]->type == COLLIDER_NONE || colliders[i]->type == COLLIDER_PLAYER)
 				continue;
 
-			if (colliders[i]->type == COLLIDER_BONE || colliders[i]->type == COLLIDER_DEADLY)
+			if (colliders[i]->type == COLLIDER_WALL)
+			{
+				if (colliders[i]->WillCollideGround(App->player->collider->rect, ceil(App->player->gravity)))
+					App->player->contact.y = 1;
+
+				if (colliders[i]->WillCollideTop(App->player->collider->rect, ceil(App->player->speed.y)))
+					App->player->contact.y = 2;
+
+				if (colliders[i]->WillCollideLeft(App->player->collider->rect, App->player->speed_modifier.x))
+					App->player->contact.x = 1;
+
+				if (colliders[i]->WillCollideRight(App->player->collider->rect, App->player->speed_modifier.x))
+					App->player->contact.x = 2;
+			}
+			else if (colliders[i]->type == COLLIDER_BONE || colliders[i]->type == COLLIDER_DEADLY)
 			{
 				c = colliders[i];
 
@@ -82,17 +96,6 @@ bool j1Collisions::Update(float dt)
 
 				}
 			}
-			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideGround(App->player->collider->rect, ceil(App->player->gravity)))
-				App->player->contact.y = 1;
-
-			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideTop(App->player->collider->rect, ceil(App->player->speed.y)))
-				App->player->contact.y = 2;
-			
-			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideLeft(App->player->collider->rect, App->player->speed_modifier.x))
-				App->player->contact.x = 1;
-
-			if (colliders[i]->type == COLLIDER_WALL && colliders[i]->WillCollideRight(App->player->collider->rect, App->player->speed_modifier.x))
-				App->player->contact.x = 2;
 	}
 
 	DebugDraw();
