@@ -77,6 +77,7 @@ j1Player::j1Player()
 j1Player::~j1Player()
 {
 	App->tex->UnLoad(graphics);
+	App->tex->UnLoad(App->map->bone_graphics);
 }
 
 bool j1Player::Awake(pugi::xml_node& conf)
@@ -204,12 +205,12 @@ bool j1Player::PostUpdate()
 
 			}
 			position.x = App->map->data.player_starting_value.x;
-			position.y = App->map->data.player_starting_value.y - 5;
+			position.y = App->map->data.player_starting_value.y - gravity * 2;
 		}
 		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		{
 			position.x = App->map->data.player_starting_value.x;
-			position.y = App->map->data.player_starting_value.y - 5;
+			position.y = App->map->data.player_starting_value.y - gravity * 2;
 		}
 	}
 
@@ -417,7 +418,7 @@ bool j1Player::Load(pugi::xml_node& data)
 	if(App->map->map == data.child("player_position").attribute("map").as_int())
 	{ 
 		position.x = data.child("player_position").attribute("x").as_float();
-		position.y = data.child("player_position").attribute("y").as_float() -3;
+		position.y = data.child("player_position").attribute("y").as_float() - gravity * 2;
 	}
 	else
 	{
@@ -428,7 +429,7 @@ bool j1Player::Load(pugi::xml_node& data)
 			App->map->CleanUp();
 			App->map->Load("Level 2 final.tmx");
 			position.x = data.child("player_position").attribute("x").as_float();
-			position.y = data.child("player_position").attribute("y").as_float() - 3;
+			position.y = data.child("player_position").attribute("y").as_float() - gravity * 2;
 		}
 		else
 		{
@@ -437,7 +438,7 @@ bool j1Player::Load(pugi::xml_node& data)
 			App->map->CleanUp();
 			App->map->Load("Level 1 final.tmx");
 			position.x = data.child("player_position").attribute("x").as_float();
-			position.y = data.child("player_position").attribute("y").as_float() - 3;
+			position.y = data.child("player_position").attribute("y").as_float() - gravity * 2;
 		}
 	}
 
