@@ -86,6 +86,8 @@ bool j1Player::Awake(pugi::xml_node& conf)
 	walljump_time = conf.child("walljump_time").attribute("value").as_int();
 	speed_modifier.y = conf.child("speed_modifier.y").attribute("value").as_float();
 	speed_modifier.x = conf.child("speed_modifier.x").attribute("value").as_float();
+	walljump_speed.y = conf.child("walljump_speed.y").attribute("value").as_float();
+	walljump_speed.x = conf.child("walljump_speed.x").attribute("value").as_float();
 	gravity = conf.child("gravity").attribute("value").as_float();
 
 	return true;
@@ -163,7 +165,7 @@ bool j1Player::PostUpdate()
 
 			if (contact.y == 1)
 				current_animation = &run;
-			if (App->collision->AllowPlayerRight && contact.x != 2)
+			if (contact.x != 2)
 				speed.x = speed_modifier.x;
 		}
 
@@ -174,7 +176,7 @@ bool j1Player::PostUpdate()
 
 			if (contact.y == 1)
 				current_animation = &run;
-			if (App->collision->AllowPlayerLeft && contact.x != 1)
+			if (contact.x != 1)
 				speed.x = -speed_modifier.x;
 		}
 
@@ -215,19 +217,19 @@ bool j1Player::PostUpdate()
 	Jump();
 	Slide();
 
-	if (App->collision->AllowPlayerLeft && sliding && contact.x != 1 && flip)
+	if (sliding && contact.x != 1 && flip)
 		speed.x = -1.5 * speed_modifier.x;
-	else if (App->collision->AllowPlayerRight && sliding && contact.x != 2 && !flip)
+	else if ( sliding && contact.x != 2 && !flip)
 		speed.x = 1.5 * speed_modifier.x;
 
 
 	if (!walljumping)
 		position.x += speed.x;
 
-	if (App->collision->AllowPlayerDown && contact.y != 1 && StickToWall)
+	if (contact.y != 1 && StickToWall)
 		position.y += gravity / 2;
 
-	else if (App->collision->AllowPlayerDown && contact.y != 1)
+	else if (contact.y != 1)
 		position.y += gravity;
 
 	StickToWall = false;
@@ -264,7 +266,7 @@ bool j1Player::PostUpdate()
 		   time = frames;
 		   allowtime = false;
 		}
-	    if(frames - time < 3000)
+	    if(frames - time < 360)
 		{ 
 	       App->render->Blit(App->scene->win_screen, position.x- 400, position.y - 400);
 		}
@@ -345,15 +347,15 @@ void j1Player::Jump()
 		if (frames - time <= walljump_time && contact.x == 0)
 		{
 			current_animation = &jump;
-			position.y -= speed.y * 0.8;
+			position.y -= walljump_speed.y;
 
 			if (jcontact == 1)
 			{
-				position.x += speed_modifier.x;
+				position.x += walljump_speed.x;
 				flip = true;
 			}
 			else if (jcontact == 2)
-				position.x -= speed_modifier.x;
+				position.x -= walljump_speed.x;
 		}
 		else
 		{
@@ -373,7 +375,6 @@ void j1Player::Jump()
 
 void j1Player::Slide()
 {	
-	
 	if (sliding)
 	{
 		if (allowtime)
