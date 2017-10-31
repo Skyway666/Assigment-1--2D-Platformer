@@ -1,10 +1,49 @@
-﻿  j1Scene.cpp
+﻿  pugixml.cpp
+  j1Window.cpp
+  j1Textures.cpp
+  j1Render.cpp
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1render.cpp(118): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1render.cpp(119): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  p2Log.cpp
+  j1Scene.cpp
+  j1Player.cpp
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(26): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(33): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(59): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(66): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(74): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(109): warning C4838: conversion from 'double' to 'int' requires a narrowing conversion
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(109): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(126): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(222): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(224): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(242): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(242): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(245): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(246): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(252): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(255): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(255): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(272): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(393): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(394): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(395): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(396): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1player.cpp(409): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  j1Map.cpp
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1map.cpp(33): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1map.cpp(75): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1map.cpp(460): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1map.cpp(465): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  j1Input.cpp
+  j1Audio.cpp
+  j1App.cpp
+  j1Main.cpp
   j1Collisions.cpp
-c:\users\joan\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1collisions.cpp(52): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\joan\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1collisions.cpp(55): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\joan\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1collisions.cpp(58): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\joan\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1collisions.cpp(61): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1collisions.cpp(52): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1collisions.cpp(55): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1collisions.cpp(58): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\lucasgm\documents\github\assignment-1--2d-platformer\dev_class5_handout\motor2d\j1collisions.cpp(61): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   Generating Code...
-  LINK : C:\Users\Joan\Documents\GitHub\Assignment-1--2D-Platformer\Dev_class5_handout\Debug\Motor 2D.exe not found or not built by the last incremental link; performing full link
-  Motor2D.vcxproj -> C:\Users\Joan\Documents\GitHub\Assignment-1--2D-Platformer\Dev_class5_handout\Debug\Motor 2D.exe
-  Motor2D.vcxproj -> C:\Users\Joan\Documents\GitHub\Assignment-1--2D-Platformer\Dev_class5_handout\Debug\Motor 2D.pdb (Full PDB)
+  Motor2D.vcxproj -> C:\Users\lucasgm\Documents\GitHub\Assignment-1--2D-Platformer\Dev_class5_handout\Debug\Motor 2D.exe
+  Motor2D.vcxproj -> C:\Users\lucasgm\Documents\GitHub\Assignment-1--2D-Platformer\Dev_class5_handout\Debug\Motor 2D.pdb (Partial PDB)
